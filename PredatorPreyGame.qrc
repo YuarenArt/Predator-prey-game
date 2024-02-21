@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/PredatorPreyGame">
+        <file>resources/styles/styles.qss</file>
+    </qresource>
+</RCC>
