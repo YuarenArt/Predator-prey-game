@@ -5,13 +5,20 @@
 
 PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	: QMainWindow(parent)
-	, ui(new Ui::PredatorPreyGameClass())
+	, ui(new Ui::PredatorPreyGame())
 {
+
+	SplashScreen* splashScreen = new SplashScreen;
+	splashScreen->showFullScreen();
+
 	ui->setupUi(this);
 
 	setMainBackgroundImage();
-
 	enterFullscreenMode();
+
+	menu = new Menu(this);
+	ui->menuLaout->addWidget(menu);
+
 
 }
 

@@ -7,8 +7,8 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    FieldSprite w;
-    
+    //FieldSprite w;
+    PredatorPreyGame w;
 
     QFile styleFile("./resources/styles/styles.qss");
     if (styleFile.open(QFile::ReadOnly)) {

@@ -1,13 +1,16 @@
 #pragma once
 
 #include <QMainWindow>
+
 #include "ui_PredatorPreyGame.h"
-#include "field_sprite/FieldSprite.h"
+#include "field/field_sprite/FieldSprite.h"
+#include "splash_screen/SplashScreen.h"
+#include "widgets/menu/Menu.h"
 
 const QString BACKGROUNDPATH = "./resources/images/mainBackground.jpg";
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class PredatorPreyGameClass; };
+namespace Ui { class PredatorPreyGame; };
 QT_END_NAMESPACE
 
 class PredatorPreyGame : public QMainWindow
@@ -19,7 +22,8 @@ public:
 	~PredatorPreyGame();
 
 private:
-	Ui::PredatorPreyGameClass *ui;
+	Ui::PredatorPreyGame *ui;
+	Menu* menu;
 	//Class gamer
 
 	void setMainBackgroundImage(QString pathToFile = BACKGROUNDPATH);

@@ -1,5 +1,14 @@
 #include "FieldSprite.h"
 
+const QString FieldSprite::IMAGE_PATH_PREFIX = "./././resources/images";
+const QString FieldSprite::IMAGE_PATH_SUFFIX = ".jpg";
+const QString FieldSprite::IMAGE_FOLDER_GRASS = "/grass/grass";
+const QString FieldSprite::IMAGE_FOLDER_FOREST = "/forest/forest";
+const QString FieldSprite::IMAGE_FOLDER_PREY = "/prey/prey";
+const QString FieldSprite::IMAGE_FOLDER_PREDATOR = "/predator/predator";
+const QString FieldSprite::IMAGE_FOLDER_STONE = "/stone/stone";
+const QString FieldSprite::IMAGE_FOLDER_ZOMBIE = "/zombie/zombie";
+
 FieldSprite::FieldSprite(QWidget* parent, int imageId)
     : QWidget(parent), ui(new Ui::FieldSprite())
 {
@@ -29,25 +38,25 @@ void FieldSprite::setImage(int imageId)
 
 QString FieldSprite::getPathToImage(int imageId)
 {
-    QString path = "././resources/images";
+    QString path = IMAGE_PATH_PREFIX;
     switch (imageId) {
     case Grass:
-        path += "/grass/grass.jpg";
+        path += IMAGE_FOLDER_GRASS + IMAGE_PATH_SUFFIX;
         break;
     case Forest:
-        path += "/forest/forest.jpg";
+        path += IMAGE_FOLDER_FOREST + IMAGE_PATH_SUFFIX;
         break;
     case Prey:
-        path += "/prey/prey.jpg";
+        path += IMAGE_FOLDER_PREY + IMAGE_PATH_SUFFIX;
         break;
     case Predator:
-        path += "/predator/predator.jpg";
+        path += IMAGE_FOLDER_PREDATOR + IMAGE_PATH_SUFFIX;
         break;
     case Stone:
-        path += "/stone/stone.jpg";
+        path += IMAGE_FOLDER_STONE + IMAGE_PATH_SUFFIX;
         break;
     case Zombie:
-        path += "/zombie/zombie.jpg";
+        path += IMAGE_FOLDER_ZOMBIE + IMAGE_PATH_SUFFIX;
         break;
     default:
         qDebug() << "Unknown image type:" << imageId;

@@ -31,7 +31,13 @@
     <QtMoc Include="src\PredatorPreyGame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\field_sprite\FieldSprite.h">
+    <QtMoc Include="src\field\field_sprite\FieldSprite.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\splash_screen\SplashScreen.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\widgets\menu\Menu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -47,7 +53,19 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field_sprite\FieldSprite.cpp">
+    <ClCompile Include="src\field\field_sprite\FieldSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\splash_screen\SplashScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\position\Position.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\position\point2D\Point2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\menu\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,8 +73,19 @@
     <QtUic Include="src\PredatorPreyGame.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\field_sprite\FieldSprite.ui">
+    <QtUic Include="src\field\field_sprite\FieldSprite.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="src\widgets\menu\Menu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\position\Position.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\position\point2D\Point2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -83,23 +83,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\field_sprite\FieldSprite.cpp" />
+    <ClCompile Include="src\field\field_sprite\FieldSprite.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\position\point2D\Point2D.cpp" />
+    <ClCompile Include="src\position\Position.cpp" />
     <ClCompile Include="src\PredatorPreyGame.cpp" />
+    <ClCompile Include="src\splash_screen\SplashScreen.cpp" />
+    <ClCompile Include="src\widgets\menu\Menu.cpp" />
     <QtRcc Include="PredatorPreyGame.qrc" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\PredatorPreyGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\field_sprite\FieldSprite.ui" />
+    <QtUic Include="src\field\field_sprite\FieldSprite.ui" />
     <QtUic Include="src\PredatorPreyGame.ui" />
+    <QtUic Include="src\widgets\menu\Menu.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\styles\styles.qss" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\field_sprite\FieldSprite.h" />
+    <QtMoc Include="src\field\field_sprite\FieldSprite.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\splash_screen\SplashScreen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\position\point2D\Point2D.h" />
+    <ClInclude Include="src\position\Position.h" />
+    <QtMoc Include="src\widgets\menu\Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
