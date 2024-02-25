@@ -6,6 +6,7 @@
 #include "field/field_sprite/FieldSprite.h"
 #include "splash_screen/SplashScreen.h"
 #include "widgets/menu/Menu.h"
+#include "field/field_sprite_vector/FieldSpriteVector.h"
 
 const QString BACKGROUNDPATH = "./resources/images/mainBackground.jpg";
 
@@ -22,7 +23,7 @@ public:
 	~PredatorPreyGame();
 
 private:
-	Ui::PredatorPreyGame *ui;
+	Ui::PredatorPreyGame* ui;
 	Menu* menu;
 	//Class gamer
 
