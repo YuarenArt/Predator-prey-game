@@ -4,10 +4,13 @@
 #include <QPixmap>
 #include <QString>
 #include <QObject>
+#include <QMap>
 
 #include "ui_FieldSprite.h"
 
-enum Image
+
+
+enum ImageType
 {
 	Grass,
 	Prey,
@@ -26,14 +29,24 @@ class FieldSprite : public QWidget
 	Q_OBJECT
 
 public:
-	FieldSprite(QWidget *parent = nullptr, int imageId = 0);
+	FieldSprite(QWidget *parent = nullptr, ImageType imageType = ImageType::Grass);
 	~FieldSprite();
+	FieldSprite(const FieldSprite& other);
+	FieldSprite& operator=(const FieldSprite& other);
+
+	void setImage();
+	void changeImageId(ImageType imageType);
+
+protected:
+	void resizeEvent(QResizeEvent* event) override;
 
 private:
 	Ui::FieldSprite *ui;
+	ImageType imageType;
 
-	void setImage(int imageId = 0);
-	QString getPathToImage(int imageId = 0);
+	QString getPathToImage(ImageType imageType = ImageType::Grass);
+
+	static QMap<ImageType, QPixmap> imageCache;
 
 	static const QString IMAGE_PATH_PREFIX; 
 	static const QString IMAGE_PATH_SUFFIX; 

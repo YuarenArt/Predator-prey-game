@@ -1,6 +1,7 @@
 #include <QtWidgets/QApplication>
 #include <QApplication>
 #include <QFile>
+#include <QPixmapCache>
 
 #include "PredatorPreyGame.h"
 
@@ -8,7 +9,9 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     //FieldSprite w;
+    QPixmapCache::setCacheLimit(20480);
     FieldSpriteVector w;
+
 
     QFile styleFile("./resources/styles/styles.qss");
     if (styleFile.open(QFile::ReadOnly)) {

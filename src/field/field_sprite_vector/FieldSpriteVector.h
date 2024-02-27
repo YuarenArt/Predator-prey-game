@@ -3,8 +3,9 @@
 #include <QWidget>
 #include <Qvector>
 
+
 #include "ui_FieldSpriteVector.h"
-#include "/Users/HP/source/repos/Predator-prey game/src/field/field_sprite/FieldSprite.h"
+#include "field_sprite/FieldSprite.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FieldSpriteVector; };
@@ -15,11 +16,18 @@ class FieldSpriteVector : public QWidget
 	Q_OBJECT
 
 public:
-	FieldSpriteVector(QWidget *parent = nullptr, int raw = 10, int columns = 10);
+	FieldSpriteVector(QWidget *parent = nullptr, int rows = 10, int columns = 10);
 	~FieldSpriteVector();
 
+	int getRowCount();
+	int getColumnsCount();
+
+	void fillFieldWithMatrix(QVector<QVector<ImageType>> matrix);
+	void fillFieldWithRandom(int rows, int columns);
+	void fillSpriteGrid();
+
 private:
-	Ui::FieldSpriteVector *ui;
+	Ui::FieldSpriteVector* ui;
 	QVector<QVector<FieldSprite>> fieldSpriteVector;
 
 };
