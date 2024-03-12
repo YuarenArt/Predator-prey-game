@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/PredatorPreyGame">
         <file>resources/styles/styles.qss</file>
+        <file>resources/images/forest/forest.jpg</file>
+        <file>resources/images/grass/grass.jpg</file>
+        <file>resources/images/predator/predator.jpg</file>
+        <file>resources/images/prey/prey.jpg</file>
+        <file>resources/images/stone/stone.jpg</file>
+        <file>resources/images/background/mainBackground.jpg</file>
+        <file>resources/images/background/spashScreenBackground.jpg</file>
     </qresource>
 </RCC>

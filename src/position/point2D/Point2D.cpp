@@ -8,12 +8,12 @@ void Point2D::setPoint(int row, int column)
     this->column = column;
 }
 
-int Point2D::getX() const
+int Point2D::getRow() const
 {
     return row;
 }
 
-int Point2D::getY() const
+int Point2D::getColumn() const
 {
     return column;
 }

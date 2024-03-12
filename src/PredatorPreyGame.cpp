@@ -2,29 +2,35 @@
 
 #include <QKeyEvent>
 #include <QSizeGrip>
+#include <QThread>
 
 PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::PredatorPreyGame())
 {
-
-	SplashScreen* splashScreen = new SplashScreen;
-	splashScreen->showFullScreen();
+	// Запланировать показ заставки с небольшой задержкой
+	QTimer::singleShot(0, this, &PredatorPreyGame::showSplashScreen);
 
 	ui->setupUi(this);
-
 	setMainBackgroundImage();
 	enterFullscreenMode();
 
 	menu = new Menu(this);
 	ui->menuLaout->addWidget(menu);
 
+	field = nullptr;
+	ui->fieldLaout->addWidget(field);
 
+	connect(menu->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
+	connect(menu->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
 }
 
 PredatorPreyGame::~PredatorPreyGame()
 {
 	delete ui;
+	delete menu;
+	delete field;
+
 }
 
 void PredatorPreyGame::setMainBackgroundImage(QString pathToFile)
@@ -37,7 +43,7 @@ void PredatorPreyGame::setMainBackgroundImage(QString pathToFile)
 }
 
 void PredatorPreyGame::exitFullscreenMode() {
-		showNormal();
+	showNormal();
 }
 
 void PredatorPreyGame::enterFullscreenMode() {
@@ -46,14 +52,69 @@ void PredatorPreyGame::enterFullscreenMode() {
 
 void PredatorPreyGame::keyPressEvent(QKeyEvent* event) {
 	if (event->key() == Qt::Key_F11) {
-		enterFullscreenMode();
+		toggleFullscreenMode();
 	}
 	else if (event->key() == Qt::Key_Escape) {
-		exitFullscreenMode();
+		toggleMenuVisibility(); 
 	}
 	else {
 		QMainWindow::keyPressEvent(event);
 	}
 }
 
+void PredatorPreyGame::toggleFullscreenMode() {
+	if (isFullScreen()) {
+		showNormal();
+	}
+	else {
+		showFullScreen();
+	}
+}
+
+void PredatorPreyGame::toggleMenuVisibility() {
+	if (menu->isVisible()) {
+		hideMenu(); 
+	}
+	else {
+		showMenu();
+	}
+}
+
+void PredatorPreyGame::createField()
+{
+	if (field != nullptr) {
+		delete field;
+		field = nullptr;
+	}
+
+	field = new Field(this, 10, 10); 
+	ui->fieldLaout->addWidget(field);
+}
+
+void PredatorPreyGame::startNewGame()
+{
+	createField();
+	hideMenu();
+}
+
+void PredatorPreyGame::clearField()
+{
+	field = nullptr;
+}
+
+void PredatorPreyGame::showSplashScreen()
+{
+	SplashScreen* splashScreen = new SplashScreen;
+	splashScreen->showFullScreen();
+}
+
+void PredatorPreyGame::showMenu()
+{
+	ui->menu->show();
+}
+
+void PredatorPreyGame::hideMenu()
+{
+	ui->menu->hide();
+}
 

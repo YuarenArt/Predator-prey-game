@@ -14,7 +14,6 @@ class Menu : public QWidget
 public:
 	Menu(QWidget *parent = nullptr);
 	~Menu();
+	Ui::Menu* ui;
 
-private:
-	Ui::Menu *ui;
 };

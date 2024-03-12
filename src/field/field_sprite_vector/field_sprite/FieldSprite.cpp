@@ -1,13 +1,22 @@
 #include "FieldSprite.h"
 
-const QString FieldSprite::IMAGE_PATH_PREFIX = "././././resources/images";
-const QString FieldSprite::IMAGE_PATH_SUFFIX = ".jpg";
-const QString FieldSprite::IMAGE_FOLDER_GRASS = "/grass/grass";
-const QString FieldSprite::IMAGE_FOLDER_FOREST = "/forest/forest";
-const QString FieldSprite::IMAGE_FOLDER_PREY = "/prey/prey";
-const QString FieldSprite::IMAGE_FOLDER_PREDATOR = "/predator/predator";
-const QString FieldSprite::IMAGE_FOLDER_STONE = "/stone/stone";
-const QString FieldSprite::IMAGE_FOLDER_ZOMBIE = "/zombie/zombie";
+const QString FieldSprite::PATH_TO_GRASS = ":/PredatorPreyGame/resources/images/grass/grass.jpg";
+const QString FieldSprite::PATH_TO_FOREST = ":/PredatorPreyGame/resources/images/forest/forest.jpg";
+const QString FieldSprite::PATH_TO_STONE = ":/PredatorPreyGame/resources/images/stone/stone.jpg";
+const QString FieldSprite::PATH_TO_PREY = ":/PredatorPreyGame/resources/images/prey/prey.jpg";
+const QString FieldSprite::PATH_TO_PREDATOR = ":/PredatorPreyGame/resources/images/predator/predator.jpg";
+const QString FieldSprite::PATH_TO_ZOMBIE = ":/PredatorPreyGame/resources/images/zombie/zombie.jpg";
+
+ImageType& operator++(ImageType& type) {
+    return type = static_cast<ImageType>(static_cast<int>(type) + 1);
+}
+
+ImageType operator++(ImageType& type, int)
+{
+    ImageType oldType = type;
+    ++type;
+    return oldType;
+}
 
 QMap<ImageType, QPixmap> FieldSprite::imageCache;
 
@@ -42,13 +51,21 @@ FieldSprite& FieldSprite::operator=(const FieldSprite& other) {
 
 void FieldSprite::setImage()
 {
-
     if (!imageCache.contains(imageType)) {
-        QString pathToImage = getPathToImage(imageType);
-        QPixmap image = getImage(pathToImage);
-        imageCache.insert(imageType, image);
+        addToImageCache(imageType);
     }
 
+    setImageWithWindowSize();
+}
+
+void  FieldSprite::addToImageCache(ImageType imageType) {
+    QString pathToImage = getPathToImage(imageType);
+    QPixmap image = getImage(pathToImage);
+    imageCache.insert(imageType, image);
+}
+
+void FieldSprite::setImageWithWindowSize()
+{
     QPixmap cachedImage = imageCache.value(imageType);
     cachedImage = cachedImage.scaled(this->size(), Qt::IgnoreAspectRatio);
 
@@ -57,34 +74,35 @@ void FieldSprite::setImage()
 
     this->setAutoFillBackground(true);
     this->setPalette(palette);
+
 }
 
 void FieldSprite::changeImageId(ImageType newImageType)
 {
     imageType = newImageType;
+    setImage();
 }
 
 QString FieldSprite::getPathToImage(ImageType imageType) {
-
-    QString path = IMAGE_PATH_PREFIX;
+    QString path;
     switch (imageType) {
     case ImageType::Grass:
-        path += IMAGE_FOLDER_GRASS + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_GRASS;
         break;
     case ImageType::Forest:
-        path += IMAGE_FOLDER_FOREST + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_FOREST;
         break;
     case ImageType::Prey:
-        path += IMAGE_FOLDER_PREY + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_PREY;
         break;
     case ImageType::Predator:
-        path += IMAGE_FOLDER_PREDATOR + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_PREDATOR;
         break;
     case ImageType::Stone:
-        path += IMAGE_FOLDER_STONE + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_STONE;
         break;
     case ImageType::Zombie:
-        path += IMAGE_FOLDER_ZOMBIE + IMAGE_PATH_SUFFIX;
+        path = PATH_TO_ZOMBIE;
         break;
     default:
         qDebug() << "Unknown image type:" << static_cast<int>(imageType);
@@ -96,7 +114,7 @@ QString FieldSprite::getPathToImage(ImageType imageType) {
 void FieldSprite::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
-    setImage();
+    setImageWithWindowSize();
 }
 
 QPixmap getImage(const QString& pathToImage)

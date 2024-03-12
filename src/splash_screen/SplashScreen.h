@@ -6,11 +6,9 @@
 #include <QTimer>
 #include <QPixmap>
 
-#include "ui_SplashScreen.h"
+const QString SPLASH_SCREEN_BACKGROUND_PATH = ":/PredatorPreyGame/resources/images/background/spashScreenBackground.jpg";
 
-const QString SPLASHSCREENBACKGROUNDPATH = "././resources/images/background/spashScreenBackground.jpg";
-
-class SplashScreen : public QMainWindow
+class SplashScreen : public QWidget
 {
     Q_OBJECT
 

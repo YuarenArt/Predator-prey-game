@@ -31,13 +31,19 @@
     <QtMoc Include="src\PredatorPreyGame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\field\field_sprite\FieldSprite.h">
+    <QtMoc Include="src\field\field_sprite_vector\field_sprite\FieldSprite.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\splash_screen\SplashScreen.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\widgets\menu\Menu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\field\field_sprite_vector\FieldSpriteVector.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\field\Field.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -53,7 +59,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\field_sprite\FieldSprite.cpp">
+    <ClCompile Include="src\field\field_sprite_vector\field_sprite\FieldSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\splash_screen\SplashScreen.cpp">
@@ -68,15 +74,33 @@
     <ClCompile Include="src\widgets\menu\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\field\field_sprite_vector\FieldSpriteVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\field\actors\ActorsInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\field\position_matrix\PositionMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\field\Field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\PredatorPreyGame.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\field\field_sprite\FieldSprite.ui">
+    <QtUic Include="src\field\field_sprite_vector\field_sprite\FieldSprite.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\widgets\menu\Menu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\field\field_sprite_vector\FieldSpriteVector.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\field\Field.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -85,6 +109,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\position\point2D\Point2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\field\actors\ActorsInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\field\position_matrix\PositionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

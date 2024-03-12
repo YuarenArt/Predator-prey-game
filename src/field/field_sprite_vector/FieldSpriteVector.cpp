@@ -4,17 +4,31 @@
 FieldSpriteVector::FieldSpriteVector(QWidget* parent, int rows, int columns) 
     : QWidget(parent), ui(new Ui::FieldSpriteVector())
 {
-
     ui->setupUi(this);
-
-    fillFieldWithRandom(rows, columns);
-    fillSpriteGrid();
-
 }
 
 FieldSpriteVector::~FieldSpriteVector()
 {
     delete ui;
+}
+
+FieldSpriteVector& FieldSpriteVector::operator=(const FieldSpriteVector& other)
+{
+    if (this != &other)
+    {
+        fieldSpriteVector.clear();
+
+        for (const auto& innerVector : other.fieldSpriteVector)
+        {
+            QVector<FieldSprite> tempInnerVector;
+            for (const auto& sprite : innerVector)
+            {
+                tempInnerVector.append(sprite);
+            }
+            fieldSpriteVector.append(tempInnerVector);
+        }
+    }
+    return *this;
 }
 
 int FieldSpriteVector::getRowCount() {
@@ -66,4 +80,9 @@ void FieldSpriteVector::fillSpriteGrid()
         }
     }
 
+}
+
+void FieldSpriteVector::changeImageTypeInVector(int row, int column, ImageType imageType)
+{
+    fieldSpriteVector[row][column].changeImageId(imageType);
 }

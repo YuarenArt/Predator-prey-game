@@ -83,7 +83,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\field\field_sprite\FieldSprite.cpp" />
+    <ClCompile Include="src\field\Field.cpp" />
+    <ClCompile Include="src\field\position_matrix\PositionMatrix.cpp" />
+    <ClCompile Include="src\field\actors\ActorsInterface.cpp" />
+    <ClCompile Include="src\field\field_sprite_vector\field_sprite\FieldSprite.cpp" />
+    <ClCompile Include="src\field\field_sprite_vector\FieldSpriteVector.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\position\point2D\Point2D.cpp" />
     <ClCompile Include="src\position\Position.cpp" />
@@ -96,7 +100,9 @@
     <QtMoc Include="src\PredatorPreyGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\field\field_sprite\FieldSprite.ui" />
+    <QtUic Include="src\field\Field.ui" />
+    <QtUic Include="src\field\field_sprite_vector\field_sprite\FieldSprite.ui" />
+    <QtUic Include="src\field\field_sprite_vector\FieldSpriteVector.ui" />
     <QtUic Include="src\PredatorPreyGame.ui" />
     <QtUic Include="src\widgets\menu\Menu.ui" />
   </ItemGroup>
@@ -104,12 +110,16 @@
     <None Include="resources\styles\styles.qss" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\field\field_sprite\FieldSprite.h" />
+    <QtMoc Include="src\field\field_sprite_vector\field_sprite\FieldSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\splash_screen\SplashScreen.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\field\field_sprite_vector\FieldSpriteVector.h" />
+    <QtMoc Include="src\field\Field.h" />
+    <ClInclude Include="src\field\position_matrix\PositionMatrix.h" />
+    <ClInclude Include="src\field\actors\ActorsInterface.h" />
     <ClInclude Include="src\position\point2D\Point2D.h" />
     <ClInclude Include="src\position\Position.h" />
     <QtMoc Include="src\widgets\menu\Menu.h" />

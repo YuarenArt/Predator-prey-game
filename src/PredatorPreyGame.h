@@ -5,9 +5,10 @@
 #include "ui_PredatorPreyGame.h"
 #include "splash_screen/SplashScreen.h"
 #include "widgets/menu/Menu.h"
-#include "field/field_sprite_vector/FieldSpriteVector.h"
+#include "field/Field.h"
 
-const QString BACKGROUNDPATH = "./resources/images/mainBackground.jpg";
+
+const QString BACKGROUNDPATH = ":/PredatorPreyGame/resources/images/background/mainBackground.jpg";
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PredatorPreyGame; };
@@ -24,12 +25,21 @@ public:
 private:
 	Ui::PredatorPreyGame* ui;
 	Menu* menu;
-	//Class gamer
+	Field* field;
 
 	void setMainBackgroundImage(QString pathToFile = BACKGROUNDPATH);
 
 	void exitFullscreenMode();
 	void enterFullscreenMode();
 	void keyPressEvent(QKeyEvent* event) override;
+	void toggleFullscreenMode();
+	void toggleMenuVisibility();
+	void createField();
+
+	void startNewGame();
+	void clearField();
+	void showSplashScreen();
+	void showMenu();
+	void hideMenu();
 
 };

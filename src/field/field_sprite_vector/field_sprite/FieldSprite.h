@@ -8,8 +8,6 @@
 
 #include "ui_FieldSprite.h"
 
-
-
 enum ImageType
 {
 	Grass,
@@ -19,6 +17,10 @@ enum ImageType
 	Stone,
 	Zombie
 };
+
+ImageType& operator++(ImageType& type);
+ImageType operator++(ImageType& type, int);
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FieldSprite; };
@@ -34,7 +36,6 @@ public:
 	FieldSprite(const FieldSprite& other);
 	FieldSprite& operator=(const FieldSprite& other);
 
-	void setImage();
 	void changeImageId(ImageType imageType);
 
 protected:
@@ -45,17 +46,18 @@ private:
 	ImageType imageType;
 
 	QString getPathToImage(ImageType imageType = ImageType::Grass);
+	void setImageWithWindowSize();
+	void addToImageCache(ImageType imageType);
+	void setImage();
 
 	static QMap<ImageType, QPixmap> imageCache;
 
-	static const QString IMAGE_PATH_PREFIX; 
-	static const QString IMAGE_PATH_SUFFIX; 
-	static const QString IMAGE_FOLDER_GRASS; 
-	static const QString IMAGE_FOLDER_FOREST; 
-	static const QString IMAGE_FOLDER_PREY; 
-	static const QString IMAGE_FOLDER_PREDATOR; 
-	static const QString IMAGE_FOLDER_STONE; 
-	static const QString IMAGE_FOLDER_ZOMBIE; 
+	static const QString PATH_TO_GRASS;
+	static const QString PATH_TO_FOREST;
+	static const QString PATH_TO_STONE;
+	static const QString PATH_TO_PREY;
+	static const QString PATH_TO_PREDATOR;
+	static const QString PATH_TO_ZOMBIE;
 };
 
 QPixmap getImage(const QString& pathToImage);

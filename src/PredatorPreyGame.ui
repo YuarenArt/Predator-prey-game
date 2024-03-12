@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>783</width>
-    <height>512</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -18,6 +18,10 @@
   </property>
   <property name="windowTitle">
    <string>PredatorPreyGame</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../PredatorPreyGame.qrc">
+    <normaloff>:/PredatorPreyGame/resources/images/background/spashScreenBackground.jpg</normaloff>:/PredatorPreyGame/resources/images/background/spashScreenBackground.jpg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
@@ -36,6 +40,11 @@
             <height>480</height>
            </size>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="fieldLaout"/>
+           </item>
+          </layout>
          </widget>
         </item>
         <item row="0" column="4" rowspan="3">
@@ -61,6 +70,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../PredatorPreyGame.qrc"/>
+ </resources>
  <connections/>
 </ui>

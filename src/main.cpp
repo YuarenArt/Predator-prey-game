@@ -8,10 +8,8 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    //FieldSprite w;
     QPixmapCache::setCacheLimit(20480);
-    FieldSpriteVector w;
-
+    PredatorPreyGame game;
 
     QFile styleFile("./resources/styles/styles.qss");
     if (styleFile.open(QFile::ReadOnly)) {
@@ -22,6 +20,7 @@ int main(int argc, char* argv[])
         qDebug() << "Failed to open stylesheet file!";
     }
 
-    w.show();
+    game.show();
+
     return app.exec();
 }
