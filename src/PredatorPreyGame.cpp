@@ -14,21 +14,18 @@ PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	ui->setupUi(this);
 	setMainBackgroundImage();
 	enterFullscreenMode();
-
-	menu = new Menu(this);
-	ui->menuLaout->addWidget(menu);
+	ui->controlWidget->setVisible(false);
 
 	field = nullptr;
 	ui->fieldLaout->addWidget(field);
 
-	connect(menu->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
-	connect(menu->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
+	connect(ui->menuWidget->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
+	connect(ui->menuWidget->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
 }
 
 PredatorPreyGame::~PredatorPreyGame()
 {
 	delete ui;
-	delete menu;
 	delete field;
 
 }
@@ -72,7 +69,7 @@ void PredatorPreyGame::toggleFullscreenMode() {
 }
 
 void PredatorPreyGame::toggleMenuVisibility() {
-	if (menu->isVisible()) {
+	if (ui->menuWidget->isVisible()) {
 		hideMenu(); 
 	}
 	else {
@@ -95,6 +92,7 @@ void PredatorPreyGame::startNewGame()
 {
 	createField();
 	hideMenu();
+	showControl();
 }
 
 void PredatorPreyGame::clearField()
@@ -110,11 +108,21 @@ void PredatorPreyGame::showSplashScreen()
 
 void PredatorPreyGame::showMenu()
 {
-	ui->menu->show();
+	ui->menuWidget->show();
 }
 
 void PredatorPreyGame::hideMenu()
 {
-	ui->menu->hide();
+	ui->menuWidget->hide();
+}
+
+void PredatorPreyGame::showControl()
+{
+	ui->controlWidget->show();
+}
+
+void PredatorPreyGame::hideControl()
+{
+	ui->controlWidget->hide();
 }
 
