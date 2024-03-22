@@ -13,6 +13,9 @@ public:
 
 	static Position generateRandomPosition(int maxRow, int maxColumn);
 
+	bool operator==(const Position& rhs) const;
+
+
 private:
 
 	Point2D position;

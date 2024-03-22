@@ -18,3 +18,6 @@ int Point2D::getColumn() const
     return column;
 }
 
+bool Point2D::operator==(const Point2D& rhs) const {
+    return (row == rhs.row && column == rhs.column);
+}

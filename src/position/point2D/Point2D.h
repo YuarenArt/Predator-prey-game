@@ -10,6 +10,8 @@ public:
 	int getRow() const;               
 	int getColumn() const;
 
+	bool operator==(const Point2D& rhs) const;
+
 private:
 
 	int row;

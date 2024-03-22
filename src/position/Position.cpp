@@ -25,3 +25,8 @@ Position Position::generateRandomPosition(int maxRow, int maxColumn)
     int randomColumn = QRandomGenerator::global()->bounded(maxColumn);
     return Position(randomRow, randomColumn);
 }
+
+bool Position::operator==(const Position& rhs) const
+{
+    return this->position == rhs.position;;
+}
