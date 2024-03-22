@@ -7,19 +7,7 @@
 #include <QMap>
 
 #include "ui_FieldSprite.h"
-
-enum ImageType
-{
-	Grass,
-	Prey,
-	Predator,
-	Forest,
-	Stone,
-	Zombie
-};
-
-ImageType& operator++(ImageType& type);
-ImageType operator++(ImageType& type, int);
+#include "../../enums/enums.h"
 
 
 QT_BEGIN_NAMESPACE

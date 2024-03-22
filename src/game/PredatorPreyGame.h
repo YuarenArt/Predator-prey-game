@@ -3,10 +3,8 @@
 #include <QMainWindow>
 
 #include "ui_PredatorPreyGame.h"
-#include "splash_screen/SplashScreen.h"
-#include "widgets/menu/Menu.h"
 #include "field/Field.h"
-#include "widgets/control/ControlBtns.h";
+
 
 
 const QString BACKGROUNDPATH = ":/PredatorPreyGame/resources/images/background/mainBackground.jpg";
@@ -22,6 +20,19 @@ class PredatorPreyGame : public QMainWindow
 public:
 	PredatorPreyGame(QWidget *parent = nullptr);
 	~PredatorPreyGame();
+
+private slots:
+	void onPlayerMoveUp();
+	void onPlayerMoveDown();
+	void onPlayerMoveLeft();
+	void onPlayerMoveRight();
+	void onPlayerMoveUpLeft();
+	void onPlayerMoveDownLeft();
+	void onPlayerMoveDownRight();
+	void onPlayerMoveUpRight();
+
+	void onPreyCaught();
+	void endOfGame();
 
 private:
 	Ui::PredatorPreyGame* ui;

@@ -7,17 +7,6 @@ const QString FieldSprite::PATH_TO_PREY = ":/PredatorPreyGame/resources/images/p
 const QString FieldSprite::PATH_TO_PREDATOR = ":/PredatorPreyGame/resources/images/predator/predator.jpg";
 const QString FieldSprite::PATH_TO_ZOMBIE = ":/PredatorPreyGame/resources/images/zombie/zombie.jpg";
 
-ImageType& operator++(ImageType& type) {
-    return type = static_cast<ImageType>(static_cast<int>(type) + 1);
-}
-
-ImageType operator++(ImageType& type, int)
-{
-    ImageType oldType = type;
-    ++type;
-    return oldType;
-}
-
 QMap<ImageType, QPixmap> FieldSprite::imageCache;
 
 FieldSprite::FieldSprite(QWidget* parent, ImageType imageType)

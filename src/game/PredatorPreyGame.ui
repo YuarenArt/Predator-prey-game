@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
+    <width>708</width>
     <height>502</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <string>PredatorPreyGame</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../PredatorPreyGame.qrc">
+   <iconset>
     <normaloff>:/PredatorPreyGame/resources/images/background/spashScreenBackground.jpg</normaloff>:/PredatorPreyGame/resources/images/background/spashScreenBackground.jpg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -103,13 +103,13 @@
   <customwidget>
    <class>Menu</class>
    <extends>QWidget</extends>
-   <header>widgets/menu/Menu.h</header>
+   <header>../widgets/menu/Menu.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>ControlBtns</class>
    <extends>QWidget</extends>
-   <header>widgets/control/ControlBtns.h</header>
+   <header>../widgets/control/ControlBtns.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
