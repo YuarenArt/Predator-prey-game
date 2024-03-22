@@ -15,6 +15,6 @@ public:
 	ControlBtns(QWidget *parent = nullptr);
 	~ControlBtns();
 
-private:
+	// need do ui private!!!!!!!!!!!!!!!!!!!!!!1
 	Ui::ControlBtns *ui;
 };

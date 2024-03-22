@@ -50,14 +50,14 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="upleft">
+      <widget class="QPushButton" name="upLeft">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="upright">
+      <widget class="QPushButton" name="upRight">
        <property name="text">
         <string/>
        </property>
@@ -77,14 +77,14 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="downleft">
+      <widget class="QPushButton" name="downLeft">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QPushButton" name="downright">
+      <widget class="QPushButton" name="downRight">
        <property name="text">
         <string/>
        </property>
