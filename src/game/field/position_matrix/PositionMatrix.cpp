@@ -4,19 +4,21 @@
 #include <QDebug>
 #include <QSet>
 
+//TODO: refactor positionAfterMove and updateRowAndColumn due to const 
+
 const int countPrey = 1;
 const int countPredator = 1;
-const int countZombie = 0;
+const int countZombie = 3;
 
-const QSet<ImageType> barrierTerrainSet = { Stone, Forest };
-const QSet<ImageType> stoppingSet = { Prey, Predator, Zombie }; // thats type stop if you step on them
+const QSet<MyGame::ImageType> barrierTerrainSet = { MyGame::stone, MyGame::forest };
+const QSet<MyGame::ImageType> stoppingSet = { MyGame::prey, MyGame::predator,MyGame::zombie }; // thats type stop if you step on them
 
 
 PositionMatrix::PositionMatrix(int rows, int columns) 
-	: positionMatrix(rows, QVector<ImageType>(columns, ImageType::Grass)) {}
+	: positionMatrix(rows, QVector<MyGame::ImageType>(columns, MyGame::ImageType::grass)) {}
 
 // checks the ability to make at least one move in target direction
-bool PositionMatrix::isValidMove(const Position& newPosition)
+bool PositionMatrix::isValidMove(const Position& newPosition) const
 {
 	int currentRow = newPosition.getPosition().getRow();
 	int currentColumn = newPosition.getPosition().getColumn();
@@ -27,8 +29,16 @@ bool PositionMatrix::isValidMove(const Position& newPosition)
 	return isMoveInMatrixBorder(newPosition) && isFreeToMove(newPosition);
 }
 
+bool PositionMatrix::isValidPosition(const Position& position) const 
+{
+	int row = position.getPosition().getRow();
+	int column = position.getPosition().getColumn();
+	return (row >= 0 && row < getCountRows() && column >= 0 && column < getCountColumns());
+}
+
+
 // checks that move does not go beyond the boundaries of the matrix
-bool PositionMatrix::isMoveInMatrixBorder(const Position newPosition)
+bool PositionMatrix::isMoveInMatrixBorder(const Position newPosition) const
 {
 	int newRow = newPosition.getPosition().getRow();
 	int newColumn = newPosition.getPosition().getColumn();
@@ -40,18 +50,19 @@ bool PositionMatrix::isMoveInMatrixBorder(const Position newPosition)
 }
 
 // checks that the position is not occupied by the barrierTerrainSet
-bool PositionMatrix::isFreeToMove(const Position newPosition)
+bool PositionMatrix::isFreeToMove(const Position newPosition) const
 {
 	int newRow = newPosition.getPosition().getRow();
 	int newColumn = newPosition.getPosition().getColumn();
 
-	ImageType type = positionMatrix[newRow][newColumn];
+	MyGame::ImageType type = positionMatrix[newRow][newColumn];
 
 	// not in set
 	return barrierTerrainSet.find(type) == barrierTerrainSet.end();
 }
 
-Position PositionMatrix::positionAfterMove(const Position& currentPosition, const int& moveLength, const MoveDestination& moveTarget)
+Position PositionMatrix::positionAfterMove(const Position& currentPosition, const int& moveLength, 
+										   const MoveDestination& moveTarget, const MyGame::ImageType currentImageType) const
 {
 	int currentRow = currentPosition.getPosition().getRow();
 	int currentColumn = currentPosition.getPosition().getColumn();
@@ -69,42 +80,55 @@ Position PositionMatrix::positionAfterMove(const Position& currentPosition, cons
 		currentRow = newRow;
 		currentColumn = newColumn;
 
-		if (isStoppingPosition(newPosition)) break;
+		if (isStoppingPosition(newPosition, currentImageType))
+		{
+			break;
+		}
+
 	}
 
 	return Position(currentRow, currentColumn);
 }
 
 // checks that the new position is prey's position
-bool PositionMatrix::isPreyPosition(const Position& newPosition)
+bool PositionMatrix::isPreyPosition(const Position& newPosition) const
 {
 	int row = newPosition.getPosition().getRow();
 	int column = newPosition.getPosition().getColumn();
-	bool isPreyPosition = positionMatrix[row][column] == Prey;
+	bool isPreyPosition = positionMatrix[row][column] == MyGame::prey;
 
 	return isPreyPosition;
 }
 
+bool PositionMatrix::isZombiePosition(const Position& newPosition) const
+{
+	int row = newPosition.getPosition().getRow();
+	int column = newPosition.getPosition().getColumn();
+	bool isZombiePosition = positionMatrix[row][column] == MyGame::zombie;
+
+	return isZombiePosition;
+}
+
 // cheks that the new position on of the stoping: prey, predator, zombie
-bool PositionMatrix::isStoppingPosition(const Position& newPosition)
+bool PositionMatrix::isStoppingPosition(const Position& newPosition, const MyGame::ImageType currentImageType) const
 {
 	int newRow = newPosition.getPosition().getRow();
 	int newColumn = newPosition.getPosition().getColumn();
 
-	ImageType type = positionMatrix[newRow][newColumn];
+	MyGame::ImageType type = positionMatrix[newRow][newColumn];
 
 	// not in set
-	return stoppingSet.find(type) == stoppingSet.end();
+	return stoppingSet.find(type) != stoppingSet.end();
 }
 
-void PositionMatrix::changeImagesTypeInMatrix(const QVector<Position>& positions, const ImageType& imageType)
+void PositionMatrix::changeImagesTypeInMatrix(const QVector<Position>& positions, const MyGame::ImageType& imageType)
 {
 	for (auto position : positions) {
 		changeImageTypeInMatrix(position, imageType);
 	}
 }
 
-void PositionMatrix::changeImageTypeInMatrix(const Position& position, const ImageType& imageType)
+void PositionMatrix::changeImageTypeInMatrix(const Position& position, const MyGame::ImageType& imageType)
 {
 	if (!isMoveInMatrixBorder(position)) {
 		qDebug() << "Position is out of range.";
@@ -114,7 +138,7 @@ void PositionMatrix::changeImageTypeInMatrix(const Position& position, const Ima
 	setImageType(position, imageType);
 }
 
-void PositionMatrix::setImageType(const Position& position, const ImageType& imageType)
+void PositionMatrix::setImageType(const Position& position, const MyGame::ImageType& imageType)
 {
 	int row = position.getPosition().getRow();
 	int column = position.getPosition().getColumn();
@@ -140,7 +164,7 @@ int PositionMatrix::getCountColumns() const
 	return positionMatrix[0].size();
 }
 
-QVector<QVector<ImageType>> PositionMatrix::getPositionMatrix() {
+QVector<QVector<MyGame::ImageType>> PositionMatrix::getPositionMatrix() {
 	return positionMatrix;
 }
 
@@ -148,13 +172,13 @@ QVector<QVector<ImageType>> PositionMatrix::getPositionMatrix() {
 void PositionMatrix::generateFieldPartsRandomly()
 {
 	int sizeOfField = getCountRows() * getCountColumns();
-	int countForest = sizeOfField * 0.4;
+	int countForest = sizeOfField * 0.4 * 0;
 	int countStone = sizeOfField * 0.1;
 
 	QVector<int> countOfImageTypes = { countPrey, countPredator, countForest, countStone, countZombie };
 
-	std::map<ImageType, int> typeForGenerate;
-	ImageType type = Prey;
+	std::map<MyGame::ImageType, int> typeForGenerate;
+	MyGame::ImageType type = MyGame::prey;
 
 	for (auto countOfImageType : countOfImageTypes) {
 		typeForGenerate.emplace(type++, countOfImageType);
@@ -165,7 +189,17 @@ void PositionMatrix::generateFieldPartsRandomly()
 	}
 }
 
-void PositionMatrix::generateObject(ImageType objectType, int count)
+void PositionMatrix::removeActorFromPosition(const Position& position) {
+	
+	if (isValidPosition(position)) {
+		int row = position.getPosition().getRow();
+		int column = position.getPosition().getColumn();
+		positionMatrix[row][column] = MyGame::grass;
+	}
+
+}
+
+void PositionMatrix::generateObject(MyGame::ImageType objectType, int count)
 {
 	int maxRow = getCountRows();
 	int maxColumn = getCountColumns();
@@ -183,7 +217,7 @@ void PositionMatrix::generateObject(ImageType objectType, int count)
 	}
 }
 
-void PositionMatrix::updateRowAndColumnByMoveTarget(int& newRow, int& newColumn, const MoveDestination& moveTarget)
+void PositionMatrix::updateRowAndColumnByMoveTarget(int& newRow, int& newColumn, const MoveDestination& moveTarget) const
 {
 	switch (moveTarget) {
 	case MoveDestination::Up:
@@ -219,15 +253,33 @@ void PositionMatrix::updateRowAndColumnByMoveTarget(int& newRow, int& newColumn,
 	}
 }
 
-bool PositionMatrix::isGrass(const Position& position)
+bool PositionMatrix::isGrass(const Position& position) const
 {
 	int row = position.getPosition().getRow();
 	int column = position.getPosition().getColumn();
 
-	return positionMatrix[row][column] == Grass;
+	return positionMatrix[row][column] == MyGame::grass;
 }
 
-void PositionMatrix::getRowAndColumn(int& row, int& column, const Position& position) {
+void PositionMatrix::getRowAndColumn(int& row, int& column, const Position& position) 
+{
 	row = position.getPosition().getRow();
 	column = position.getPosition().getColumn();
+}
+
+QVector<QPair<Position, MyGame::ImageType>> PositionMatrix::getActorsPositions() const {
+	QVector<QPair<Position, MyGame::ImageType>> stoppingPositions;
+
+	for (int row = 0; row < getCountRows(); ++row) {
+		for (int column = 0; column < getCountColumns(); ++column) {
+			MyGame::ImageType type = positionMatrix[row][column];
+
+			if (stoppingSet.contains(type)) {
+				Position position(row, column);
+				stoppingPositions.append(qMakePair(position, type));
+			}
+		}
+	}
+
+	return stoppingPositions;
 }

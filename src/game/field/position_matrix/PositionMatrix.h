@@ -6,36 +6,46 @@
 #include "../enums/enums.h" 
 #include "../../../position/Position.h"
 
+//TODO изюавиться от множества методов для определения позици актора и сделать один метод
+
 class PositionMatrix
 {
 public:
 	PositionMatrix(int rows = 10, int columns = 10);
 
-	bool isValidMove(const Position& newPosition);
-	bool isPreyPosition(const Position& newPosition);
-	bool isStoppingPosition(const Position& newPosition);
+	bool isValidMove(const Position& newPosition) const;
+	bool isValidPosition(const Position& position) const;
 
-	void changeImagesTypeInMatrix(const QVector<Position>& positions, const ImageType& imageType);
-	void changeImageTypeInMatrix(const Position& position, const ImageType& imageType);
+	bool isPreyPosition(const Position& newPosition) const;
+	bool isZombiePosition(const Position& newPosition) const;
+	bool isStoppingPosition(const Position& newPosition, const MyGame::ImageType currentImageType) const;
+
+	void changeImagesTypeInMatrix(const QVector<Position>& positions, const MyGame::ImageType& imageType);
+	void changeImageTypeInMatrix(const Position& position, const MyGame::ImageType& imageType);
 	void generateFieldPartsRandomly();
+	void removeActorFromPosition(const Position& position);
 
-	QVector<QVector<ImageType>> getPositionMatrix();
-	Position positionAfterMove(const Position& currentPosition, const int& moveLength, const MoveDestination& moveTarget);
+	QVector<QVector<MyGame::ImageType>> getPositionMatrix();
+	Position positionAfterMove(const Position& currentPosition, const int& moveLength,
+							   const MoveDestination& moveTarget, const MyGame::ImageType currentImageType) const;
 
 	int getCountRows() const;
 	int getCountColumns() const;
 
+	QVector<QPair<Position, MyGame::ImageType>> getActorsPositions() const;
+
 private:
-	QVector<QVector<ImageType>> positionMatrix;
+	QVector<QVector<MyGame::ImageType>> positionMatrix;
 
-	bool isGrass(const Position& position);
-	bool isMoveInMatrixBorder(const Position newPosition);
-	bool isFreeToMove(const Position newPosition);
+	bool isGrass(const Position& position) const;
+	bool isMoveInMatrixBorder(const Position newPosition) const;
+	bool isFreeToMove(const Position newPosition) const;
 
-	void setImageType(const Position& position, const ImageType& imageType);
+	void setImageType(const Position& position, const MyGame::ImageType& imageType);
 	void getRowAndColumn(int& row, int& column, const Position& position);
-	void generateObject(ImageType objectType, int count);
-	void updateRowAndColumnByMoveTarget(int& newRow, int& newColumn, const MoveDestination& moveTarget);
+	void generateObject(MyGame::ImageType objectType, int count);
+	void updateRowAndColumnByMoveTarget(int& newRow, int& newColumn, const MoveDestination& moveTarget) const;
+
 
 };
 
