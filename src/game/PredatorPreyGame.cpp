@@ -26,8 +26,6 @@ PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 
 	connect(ui->menuWidget->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
 	connect(ui->menuWidget->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
-
-	connect(field, SIGNAL(preyCaught()), this, SLOT(endOfGame()));
 	
 	connect(ui->controlWidget->ui->up, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUp);
 	connect(ui->controlWidget->ui->down, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDown);
@@ -70,6 +68,9 @@ void PredatorPreyGame::keyPressEvent(QKeyEvent* event) {
 	else if (event->key() == Qt::Key_Escape) {
 		toggleMenuVisibility(); 
 	}
+	else if (event->key() == Qt::Key_F2) {
+		toggleControlVisibility();
+	}
 	else {
 		QMainWindow::keyPressEvent(event);
 	}
@@ -93,22 +94,36 @@ void PredatorPreyGame::toggleMenuVisibility() {
 	}
 }
 
-void PredatorPreyGame::createField()
-{
-	if (field != nullptr) {
-		delete field;
-		field = nullptr;
+void PredatorPreyGame::toggleControlVisibility() {
+	if (ui->controlWidget->isVisible()) {
+		hideControl();
 	}
-
-	field = new Field(this, 10, 10); 
-	ui->fieldLaout->addWidget(field);
+	else {
+		showControl();
+	}
 }
 
 void PredatorPreyGame::startNewGame()
 {
 	createField();
+	showField();
 	hideMenu();
 	showControl();
+}
+
+void PredatorPreyGame::createField()
+{
+
+	if (field != nullptr) {
+		delete field;
+		field = nullptr;
+	}
+
+	field = new Field(this, 10, 10, 10); 
+	ui->fieldLaout->addWidget(field);
+
+	connect(field, &Field::preyCaught, this, &PredatorPreyGame::endOfGame);
+	connect(field, &Field::preyEscape, this, &PredatorPreyGame::endOfGame);
 }
 
 void PredatorPreyGame::clearField()
@@ -182,6 +197,38 @@ void PredatorPreyGame::onPlayerMoveUpRight()
 	field->turn(MoveDestination::UpRight);
 }
 
+void PredatorPreyGame::endOfGame(bool isPreyCaught)
+{
+	MyGame::ImageType playerType = field->getPlayerType();
 
+	ui->field->hide();
 
+	if (isPreyCaught && playerType == MyGame::prey) gameover();
+	else if (isPreyCaught && playerType == MyGame::predator) win();
+	else if (!isPreyCaught && playerType == MyGame::prey) win();
+	else gameover();
+
+}
+
+void PredatorPreyGame::gameover()
+{
+	hideControl();
+	showMenu();
+}
+
+void PredatorPreyGame::win()
+{
+	hideControl();
+	showMenu();
+}
+
+void PredatorPreyGame::showField()
+{
+	ui->field->show();
+}
+
+void PredatorPreyGame::hideField()
+{
+	ui->field->hide();
+}
 

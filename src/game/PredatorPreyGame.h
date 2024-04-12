@@ -6,7 +6,6 @@
 #include "field/Field.h"
 
 
-
 const QString BACKGROUNDPATH = ":/PredatorPreyGame/resources/images/background/mainBackground.jpg";
 
 QT_BEGIN_NAMESPACE
@@ -31,8 +30,9 @@ private slots:
 	void onPlayerMoveDownRight();
 	void onPlayerMoveUpRight();
 
-	void onPreyCaught();
-	void endOfGame();
+	void gameover();
+	void win();
+	void endOfGame(bool isPreyCaught);
 
 private:
 	Ui::PredatorPreyGame* ui;
@@ -45,16 +45,18 @@ private:
 	void keyPressEvent(QKeyEvent* event) override;
 	void toggleFullscreenMode();
 	void toggleMenuVisibility();
+	void toggleControlVisibility();
 	void createField();
+	void clearField();
 
 	void startNewGame();
-	void clearField();
+
 	void showSplashScreen();
 	void showMenu();
 	void hideMenu();
-
 	void showControl();
-
 	void hideControl();
+	void showField();
+	void hideField();
 
 };
