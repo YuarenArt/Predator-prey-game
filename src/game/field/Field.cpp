@@ -1,7 +1,8 @@
 #include "Field.h"
 
-Field::Field(QWidget *parent, int rows, int columns, int maxMoves)
-	: QWidget(parent), ui(new Ui::Field()), maxMoves(maxMoves)
+Field::Field(QWidget* parent, int rows, int columns, int maxMoves, Difficult difficult, MyGame::ImageType typeOfplayer) :
+	
+	QWidget(parent), ui(new Ui::Field()), maxMoves(maxMoves), gameSettings{ difficult, typeOfplayer, maxMoves }
 {
 	ui->setupUi(this);
 
@@ -11,6 +12,8 @@ Field::Field(QWidget *parent, int rows, int columns, int maxMoves)
 	positionMatrix.generateFieldPartsRandomly();
 
 	createFieldSpriteVector();
+	createActors();
+	setPlayer();
 
 }
 
@@ -29,19 +32,68 @@ void Field::createFieldSpriteVector()
 	fieldSpriteVector.fillSpriteGrid();
 }
 
-// returns true if gameover:
-// - prey is successfully escape
-// - predator catch the prey
+
+void Field::createActors()
+{
+	QVector<QPair<Position, MyGame::ImageType>> actorsPositions = positionMatrix.getActorsPositions();
+
+	for (const auto& actorPosition : actorsPositions)
+	{
+		const Position&		     position = actorPosition.first;
+		const MyGame::ImageType& imageType = actorPosition.second;
+
+		if (imageType == MyGame::predator)
+		{
+			Predator* predator = new Predator(position);
+			actors.append(predator);
+		}
+		else if (imageType == MyGame::prey)
+		{
+			Prey* prey = new Prey(position);
+			actors.append(prey);
+		}
+		else if (imageType == MyGame::zombie)
+		{
+			Zombie* zombie = new Zombie(position);
+			actors.append(zombie);
+		}
+	}
+
+	for (auto actor : actors) {
+		connect(actor, &ActorsInterface::removeActor, this, &Field::handleRemoveActor);
+	}
+}
+
+void Field::setPlayer(MyGame::ImageType playerImageType)
+{
+	for (auto& actor : actors) {
+		if (actor->getImageType() == playerImageType) {
+			actor->setPlayble();
+		}
+	}
+}
+
+void Field::removeActor(const Position& position, MyGame::ImageType type) {
+
+	for (int i = 0; i < actors.size(); ++i) {
+		if (actors[i]->getPosition() == position && actors[i]->getImageType() == type) {
+			delete actors[i];
+			actors.removeAt(i);
+			break;
+		}
+	}
+}
+
+
 void Field::turn(const MoveDestination& directionPlayerMove) {
 	if (playerMove(directionPlayerMove)) {
 		
 		if (movesCounter > maxMoves) {
-			emit preyEscape();
+			emit preyEscape(true);
 			return ;
 		}
 
 		nextTurn();
-
 	}
 }
 
@@ -51,15 +103,14 @@ void Field::nextTurn()
 	{
 		if (!npc->isPlayer())
 		{
-			Position newPosition = npc->move();
-			changeImageTypeAfterMove(*npc, newPosition);
+			Position newPosition = npc->move(gameSettings.getDifficult(), positionMatrix);
 
-			if (npc->getImageType() != Prey && positionMatrix.isPreyPosition(newPosition)) {
-				emit preyCaught();
+			if (npc->getImageType() != MyGame::prey && positionMatrix.isPreyPosition(newPosition)) {
+				emit preyCaught(true);
 				break;
 			}
 
-
+			changeImageTypeAfterMove(*npc, newPosition);
 		}
 	}
 }
@@ -72,20 +123,26 @@ bool Field::playerMove(const MoveDestination& direction)
 		if (player->isPlayer() && player->isValidMoveDirection(direction))
 		{
 			Position currentPosition = player->getPosition();
-			Position newPosition = positionMatrix.positionAfterMove(currentPosition, player->getMoveLength(), direction);
+			Position newPosition = positionMatrix.positionAfterMove(currentPosition, player->getMoveLength(), direction, player->getImageType());
 
 			if (currentPosition == newPosition) return false;
 
-			if (player->getImageType() == Predator && positionMatrix.isPreyPosition(newPosition)) {
-				emit preyCaught();
+			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
+				emit preyCaught(true);
 				break;
+			}
+
+			if (positionMatrix.isZombiePosition(newPosition)) {
+
+				removeActor(newPosition, MyGame::ImageType::zombie);
+				positionMatrix.removeActorFromPosition(newPosition);
 			}
 
 			changeImageTypeAfterMove(*player, newPosition);
 			movesCounter++;
 
 			if (movesCounter > maxMoves) {
-				emit preyEscape();
+				emit preyEscape(false);
 				break;
 			}
 
@@ -99,9 +156,15 @@ void Field::changeImageTypeAfterMove(ActorsInterface& actor, const Position& new
 {
 	Position oldPosition = actor.getPosition();
 
-	positionMatrix.changeImageTypeInMatrix(oldPosition, Grass);
+	positionMatrix.changeImageTypeInMatrix(oldPosition, MyGame::grass);
 	positionMatrix.changeImageTypeInMatrix(newPosition, actor.getImageType());
+	fieldSpriteVector.changeImageTypeInVector(oldPosition, MyGame::grass);
+	fieldSpriteVector.changeImageTypeInVector(newPosition, actor.getImageType());
+
 	actor.setPosition(newPosition);
 }
 
-
+MyGame::ImageType Field::getPlayerType()
+{
+	return gameSettings.getTypeOfPlayer();
+}
