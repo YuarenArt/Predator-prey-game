@@ -14,6 +14,7 @@ class Menu : public QWidget
 public:
 	Menu(QWidget *parent = nullptr);
 	~Menu();
+	// need do ui private!!!!!!!!!!!!!!!!!!!!!!1
 	Ui::Menu* ui;
 
 };
