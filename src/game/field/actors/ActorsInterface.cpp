@@ -1,12 +1,14 @@
 #include "ActorsInterface.h"
 #include "QDebug"
+#include <QRandomGenerator>
+#include <QDateTime>
 
-Position ActorsInterface::move(const MoveDestination& direction)
-{
-	return Position();
-}
+ActorsInterface::ActorsInterface(const Position& position, const MyGame::ImageType& imageType,
+								 const MoveDirection& possibleDirection, const int moveLength, bool isPlayer) :
+	position(position), imageType(imageType), possibleDirection(possibleDirection), moveLength(moveLength), isPlayer_(isPlayer)
+{ }
 
-Position ActorsInterface::move(const Difficult& difficult, const PositionMatrix& positionMatrix)
+Position ActorsInterface::move(const Difficult& difficult, PositionMatrix& positionMatrix)
 {
 	Position newPosition;
 	switch (difficult) {
@@ -17,8 +19,39 @@ Position ActorsInterface::move(const Difficult& difficult, const PositionMatrix&
 		newPosition = autoMoveHard(positionMatrix);
 		break;
 	default:
-		qDebug() << "There isn't such difficult";
+		qDebug() << "There is no such difficult";
 		break;
+	}
+
+	return newPosition;
+}
+
+Position ActorsInterface::autoMoveStandart(PositionMatrix& positionMatrix)
+{
+	Position currentPosition = getPosition();
+	MoveDirection possibleDirection = getPossibleDirections(getImageType());
+	QSet<MoveDestination> possibleMoveDestination = getMoveDestinationsByDirection(possibleDirection);
+	Position newPosition;
+
+	if (!possibleMoveDestination.isEmpty()) {
+
+		QList<MoveDestination> possibleDirectionsList = possibleMoveDestination.values();
+
+		quint64 seed = QDateTime::currentMSecsSinceEpoch();
+		QRandomGenerator generator(seed);
+		int randomIndex = generator.bounded(0, possibleMoveDestination.size());
+		MoveDestination randomDirection = possibleDirectionsList.at(randomIndex);
+
+		newPosition = positionMatrix.positionAfterMove(currentPosition, moveLength, randomDirection, imageType);
+
+		if (positionMatrix.isZombiePosition(newPosition) && newPosition != currentPosition) {
+			emit removeActor(newPosition, MyGame::ImageType::zombie);
+			positionMatrix.removeActorFromPosition(newPosition);
+		}
+
+	}
+	else {
+		qDebug() << "Empty possible directions set";
 	}
 
 	return newPosition;
@@ -29,7 +62,7 @@ Position ActorsInterface::getPosition() const
 	return position;
 }
 
-ImageType ActorsInterface::getImageType() const
+MyGame::ImageType ActorsInterface::getImageType() const
 {
 	return imageType;
 }
@@ -44,9 +77,9 @@ void ActorsInterface::setPosition(const Position& newPosition)
 	position = newPosition;
 }
 
-void ActorsInterface::setImageType(const ImageType& newImageType)
+void ActorsInterface::setImageType(const MyGame::ImageType& newImageType)
 {
-	imageType = imageType;
+	imageType = newImageType;
 }
 
 void ActorsInterface::setPossibleDirection(const MoveDirection& newPossibleDirection)
@@ -54,54 +87,22 @@ void ActorsInterface::setPossibleDirection(const MoveDirection& newPossibleDirec
 	possibleDirection = newPossibleDirection;
 }
 
+void ActorsInterface::setPlayble() 
+{
+	isPlayer_ = true;
+}
+
 bool ActorsInterface::isPlayer() const
 {
-	return isGamer;
+	return isPlayer_;
 }
 
 bool ActorsInterface::isValidMoveDirection(const MoveDestination& destination) const
 {
 	QSet<MoveDirection> possibleDirections = getMoveDirectionsByDistination(destination);
+	for (auto direction : possibleDirections) {
+		if (direction == possibleDirection) return true;
+	}
+	return false;
 
-	return isValidDestinationByPossibleDirection(possibleDirections, possibleDirection);
-}
-
-Position ActorsInterface::moveUp()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveDown()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveLeft()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveRight()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveUpLeft()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveUpRight()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveDownLeft()
-{
-	return Position();
-}
-
-Position ActorsInterface::moveDownRight()
-{
-	return Position();
 }

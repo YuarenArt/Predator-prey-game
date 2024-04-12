@@ -1,46 +1,50 @@
 #pragma once
 
+#include <QObject>
+#include <QMetaObject>
+
 #include "../../../position/Position.h"
 #include "../position_matrix/PositionMatrix.h"
 #include "../enums/enums.h"
 
-class ActorsInterface
+class ActorsInterface: public QObject
 {
+
+	Q_OBJECT
+
+signals:
+	void removeActor(const Position& position, MyGame::ImageType type);
+
 public:
 
-	virtual Position move(const MoveDestination& direction);
-	virtual Position move(const Difficult& difficult, const PositionMatrix& positionMatrix);
-	virtual Position autoMoveStandart(const PositionMatrix& positionMatrix) = 0;
-	virtual Position autoMoveHard(const PositionMatrix& positionMatrix) = 0;
+	ActorsInterface(const Position& position, const MyGame::ImageType& imageType,
+					const MoveDirection& possibleDirection, const int moveLength, bool isPlayer);
+	virtual ~ActorsInterface() = default;
 
-	virtual Position getPosition() const;
-	virtual ImageType getImageType() const;
-	virtual int getMoveLength() const;
+
+	virtual Position move(const Difficult& difficult, PositionMatrix& positionMatrix);
+	virtual Position autoMoveStandart(PositionMatrix& positionMatrix);
+	virtual Position autoMoveHard(PositionMatrix& positionMatrix) = 0;
+
+	virtual Position          getPosition() const;
+	virtual MyGame::ImageType getImageType() const;
+	virtual int				  getMoveLength() const;
 
 	virtual void setPosition(const Position& newPosition);
-	virtual void setImageType(const ImageType& newImageType);
+	virtual void setImageType(const MyGame::ImageType& newImageType);
 	virtual void setPossibleDirection(const MoveDirection& newPossibleDirection);
+	virtual void setPlayble();
 
 	virtual bool isPlayer() const;
 	virtual bool isValidMoveDirection(const MoveDestination& target) const;
 
 private:
 
-	Position position;
-	ImageType imageType;
-	MoveDirection possibleDirection;
-	const int moveLength;
-	bool isGamer;
-
-
-	virtual Position moveUp();
-	virtual Position moveDown();
-	virtual Position moveLeft();
-	virtual Position moveRight();
-	virtual Position moveUpLeft();
-	virtual Position moveUpRight();
-	virtual Position moveDownLeft();
-	virtual Position moveDownRight();
+	Position		  position;
+	MyGame::ImageType imageType;
+	MoveDirection	  possibleDirection;
+	bool              isPlayer_;
+	const int		  moveLength;
 
 };
 

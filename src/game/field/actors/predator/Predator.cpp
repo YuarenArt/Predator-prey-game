@@ -1,21 +1,16 @@
 #include "Predator.h"
+#include <QRandomGenerator>
 
-//Predator::Predator(QObject *parent)
-//	: QObject(parent)
-//{
-//}
-//
-//Predator::~Predator()
-//{}
-//
-//void Predator::move(MoveTarget direction)
-//{
-//}
-//
-//void Predator::autoMoveStandart()
-//{
-//}
-//
-//void Predator::autoMoveHard()
-//{
-//}
+const MyGame::ImageType	imageTypeOfPredator = MyGame::ImageType::predator;
+const int			    moveLengthPredator = 3;
+const MoveDirection     predatorMoveDirection = verticallyAndHorizontally;
+
+Predator::Predator(const Position& position, bool isPlayer) :
+	ActorsInterface(position, imageTypeOfPredator, predatorMoveDirection, moveLengthPredator, isPlayer)
+{ }
+
+Position Predator::autoMoveHard(PositionMatrix& positionMatrix)
+{
+	
+	return Position();
+}
