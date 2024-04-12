@@ -7,9 +7,9 @@ const QString FieldSprite::PATH_TO_PREY = ":/PredatorPreyGame/resources/images/p
 const QString FieldSprite::PATH_TO_PREDATOR = ":/PredatorPreyGame/resources/images/predator/predator.jpg";
 const QString FieldSprite::PATH_TO_ZOMBIE = ":/PredatorPreyGame/resources/images/zombie/zombie.jpg";
 
-QMap<ImageType, QPixmap> FieldSprite::imageCache;
+QMap<MyGame::ImageType, QPixmap> FieldSprite::imageCache;
 
-FieldSprite::FieldSprite(QWidget* parent, ImageType imageType)
+FieldSprite::FieldSprite(QWidget* parent, MyGame::ImageType imageType)
     : QWidget(parent), ui(new Ui::FieldSprite()), imageType(imageType)
 {
     ui->setupUi(this);
@@ -47,7 +47,7 @@ void FieldSprite::setImage()
     setImageWithWindowSize();
 }
 
-void  FieldSprite::addToImageCache(ImageType imageType) {
+void  FieldSprite::addToImageCache(MyGame::ImageType imageType) {
     QString pathToImage = getPathToImage(imageType);
     QPixmap image = getImage(pathToImage);
     imageCache.insert(imageType, image);
@@ -66,31 +66,34 @@ void FieldSprite::setImageWithWindowSize()
 
 }
 
-void FieldSprite::changeImageId(ImageType newImageType)
+void FieldSprite::changeImageId(MyGame::ImageType newImageType)
 {
     imageType = newImageType;
     setImage();
 }
 
-QString FieldSprite::getPathToImage(ImageType imageType) {
+QString FieldSprite::getPathToImage(MyGame::ImageType imageType) {
     QString path;
+
+    using namespace MyGame;
+
     switch (imageType) {
-    case ImageType::Grass:
+    case ImageType::grass:
         path = PATH_TO_GRASS;
         break;
-    case ImageType::Forest:
+    case ImageType::forest:
         path = PATH_TO_FOREST;
         break;
-    case ImageType::Prey:
+    case ImageType::prey:
         path = PATH_TO_PREY;
         break;
-    case ImageType::Predator:
+    case ImageType::predator:
         path = PATH_TO_PREDATOR;
         break;
-    case ImageType::Stone:
+    case ImageType::stone:
         path = PATH_TO_STONE;
         break;
-    case ImageType::Zombie:
+    case ImageType::zombie:
         path = PATH_TO_ZOMBIE;
         break;
     default:

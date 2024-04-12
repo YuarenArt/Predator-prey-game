@@ -42,7 +42,7 @@ int FieldSpriteVector::getColumnsCount() {
     return fieldSpriteVector.at(0).size();
 }
 
-void FieldSpriteVector::fillFieldWithMatrix(QVector<QVector<ImageType>> matrix) {
+void FieldSpriteVector::fillFieldWithMatrix(QVector<QVector<MyGame::ImageType>> matrix) {
 
     for (int i = 0; i < matrix.size(); ++i) {
         QVector<FieldSprite> innerVector;
@@ -59,8 +59,8 @@ void FieldSpriteVector::fillFieldWithRandom(int rows, int columns) {
     for (int i = 0; i < rows; ++i) {
         QVector<FieldSprite> innerVector;
         for (int j = 0; j < columns; ++j) {
-            int randomIndex = QRandomGenerator::global()->bounded(6);
-            ImageType randomImage = static_cast<ImageType>(randomIndex);
+            int randomIndex = QRandomGenerator::global()->bounded(MyGame::getImageTypeSet().size() + 1);
+            MyGame::ImageType randomImage = static_cast<MyGame::ImageType>(randomIndex);
             FieldSprite sprite(this, randomImage);
             innerVector.append(sprite);
         }
@@ -82,7 +82,10 @@ void FieldSpriteVector::fillSpriteGrid()
 
 }
 
-void FieldSpriteVector::changeImageTypeInVector(int row, int column, ImageType imageType)
+void FieldSpriteVector::changeImageTypeInVector(Position position, MyGame::ImageType imageType)
 {
+    int row = position.getPosition().getRow();
+    int column = position.getPosition().getColumn();
+
     fieldSpriteVector[row][column].changeImageId(imageType);
 }

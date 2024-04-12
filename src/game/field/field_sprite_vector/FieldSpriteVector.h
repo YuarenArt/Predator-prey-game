@@ -6,6 +6,7 @@
 
 #include "ui_FieldSpriteVector.h"
 #include "field_sprite/FieldSprite.h"
+#include "../../../position/Position.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FieldSpriteVector; };
@@ -21,17 +22,17 @@ public:
 
 	FieldSpriteVector& operator=(const FieldSpriteVector& other);
 
-	int getRowCount();
-	int getColumnsCount();
+	int  getRowCount();
+	int  getColumnsCount();
 
-	void fillFieldWithMatrix(QVector<QVector<ImageType>> matrix);
+	void fillFieldWithMatrix(QVector<QVector<MyGame::ImageType>> matrix);
 	void fillFieldWithRandom(int rows, int columns);
 	void fillSpriteGrid();
 
-	void changeImageTypeInVector(int row, int column, ImageType imageType);
+	void changeImageTypeInVector(Position position, MyGame::ImageType imageType);
 
 private:
-	Ui::FieldSpriteVector* ui;
+	Ui::FieldSpriteVector*        ui;
 	QVector<QVector<FieldSprite>> fieldSpriteVector;
 
 };

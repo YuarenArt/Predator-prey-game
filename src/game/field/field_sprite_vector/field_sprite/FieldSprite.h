@@ -19,26 +19,26 @@ class FieldSprite : public QWidget
 	Q_OBJECT
 
 public:
-	FieldSprite(QWidget *parent = nullptr, ImageType imageType = ImageType::Grass);
+	FieldSprite(QWidget *parent = nullptr, MyGame::ImageType imageType = MyGame::ImageType::grass);
 	~FieldSprite();
 	FieldSprite(const FieldSprite& other);
 	FieldSprite& operator=(const FieldSprite& other);
 
-	void changeImageId(ImageType imageType);
+	void changeImageId(MyGame::ImageType imageType);
 
 protected:
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
-	Ui::FieldSprite *ui;
-	ImageType imageType;
+	Ui::FieldSprite  *ui;
+	MyGame::ImageType imageType;
 
-	QString getPathToImage(ImageType imageType = ImageType::Grass);
-	void setImageWithWindowSize();
-	void addToImageCache(ImageType imageType);
-	void setImage();
+	QString getPathToImage(MyGame::ImageType imageType = MyGame::ImageType::grass);
+	void    setImageWithWindowSize();
+	void    addToImageCache(MyGame::ImageType imageType);
+	void    setImage();
 
-	static QMap<ImageType, QPixmap> imageCache;
+	static QMap<MyGame::ImageType, QPixmap> imageCache;
 
 	static const QString PATH_TO_GRASS;
 	static const QString PATH_TO_FOREST;
