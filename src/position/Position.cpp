@@ -26,7 +26,12 @@ Position Position::generateRandomPosition(int maxRow, int maxColumn)
     return Position(randomRow, randomColumn);
 }
 
-bool Position::operator==(const Position& rhs) const
+bool Position::operator== (const Position& rhs) const
 {
     return this->position == rhs.position;;
+}
+
+bool Position::operator!= (const Position& rhs) const
+{
+    return !(*this == rhs);
 }
