@@ -1,14 +1,27 @@
 #include "enums.h"
 
-ImageType& operator++(ImageType& type) {
-    return type = static_cast<ImageType>(static_cast<int>(type) + 1);
-}
+namespace MyGame {
 
-ImageType operator++(ImageType& type, int)
-{
-    ImageType oldType = type;
-    ++type;
-    return oldType;
+    ImageType& operator++(ImageType& type) {
+        return type = static_cast<ImageType>(static_cast<int>(type) + 1);
+    }
+
+    ImageType operator++(ImageType& type, int)
+    {
+        ImageType oldType = type;
+        ++type;
+        return oldType;
+    }
+
+    QSet<MyGame::ImageType> getImageTypeSet() {
+        QSet<MyGame::ImageType> imageTypeArray{};
+
+        for (int i = static_cast<int>(MyGame::ImageType::grass); i <= static_cast<int>(MyGame::ImageType::zombie); ++i) {
+            imageTypeArray.insert(static_cast<MyGame::ImageType>(i));
+        }
+
+        return imageTypeArray;
+    }
 }
 
 //returns a set of possible target direction depending on direction
@@ -86,6 +99,29 @@ QSet<MoveDirection> getMoveDirectionsByDistination(const MoveDestination& destin
     return directions;
 }
 
+
+MoveDirection getPossibleDirections(MyGame::ImageType imageType)
+{
+    MoveDirection possibleDirections;
+
+    switch (imageType)
+    {
+    case MyGame::ImageType::prey:
+        possibleDirections = MoveDirection::all;
+        break;
+    case MyGame::ImageType::predator:
+        possibleDirections = MoveDirection::verticallyAndHorizontally;
+        break;
+    case MyGame::ImageType::zombie:
+        possibleDirections = MoveDirection::horizontal;
+        break;
+    default:
+        break;
+    }
+
+    return possibleDirections;
+}
+
 // returns true if direction in possibleDirections
 bool isValidDestinationByPossibleDirection(const QSet<MoveDirection>& possibleDirections, const MoveDirection direction)
 {
@@ -96,3 +132,4 @@ bool isValidDestinationByPossibleDirection(const QSet<MoveDirection>& possibleDi
     }
     return false;
 }
+

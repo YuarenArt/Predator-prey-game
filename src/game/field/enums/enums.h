@@ -2,25 +2,29 @@
 
 #include <QSet>
 
-
 enum Difficult {
 	standart,
 	hard
 };
 
-// possible type of value in matrix
-enum ImageType
-{
-	Grass,
-	Prey,
-	Predator,
-	Forest,
-	Stone,
-	Zombie
-};
+namespace MyGame {
 
-ImageType& operator++(ImageType& type);
-ImageType operator++(ImageType& type, int);
+	// possible type of value in matrix
+	enum ImageType
+	{
+		grass,
+		prey,
+		predator,
+		forest,
+		stone,
+		zombie
+	};
+
+	ImageType& operator++(ImageType& type);
+	ImageType operator++(ImageType& type, int);
+	QSet<MyGame::ImageType> getImageTypeSet();
+}
+
 
 // possible direction to move
 enum MoveDirection {
@@ -45,7 +49,9 @@ enum MoveDestination {
 
 QSet<MoveDestination> getMoveDestinationsByDirection(const MoveDirection& direction);
 
-
-QSet<MoveDirection> getMoveDirectionsByDistination(const MoveDestination& destination);
 bool isValidDestinationByPossibleDirection(const QSet<MoveDirection>& possibleDirections,
 										   const MoveDirection        possibleDirection);
+
+MoveDirection getPossibleDirections(MyGame::ImageType imageType);
+
+QSet<MoveDirection> getMoveDirectionsByDistination(const MoveDestination& destination);
