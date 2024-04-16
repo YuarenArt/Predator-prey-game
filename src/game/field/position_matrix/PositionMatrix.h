@@ -25,7 +25,7 @@ public:
 	void changeImageTypeInMatrix(const Position& position, const MyGame::ImageType& imageType);
 	void generateFieldPartsRandomly();
 	void removeActorFromPosition(const Position& position);
-	Position isBarrier(const Position& position, const MyGame::ImageType actorType) const;
+	Position findNearestActor(const Position& position, const MyGame::ImageType actorType) const;
 
 	QVector<QVector<MyGame::ImageType>> getPositionMatrix();
 	Position positionAfterMove(const Position& currentPosition, const int& moveLength,

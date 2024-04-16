@@ -14,7 +14,7 @@ const QSet<MyGame::ImageType> barrierTerrainSet = { MyGame::stone, MyGame::fores
 const QSet<MyGame::ImageType> stoppingSet = { MyGame::prey, MyGame::predator,MyGame::zombie }; // thats type stop if you step on them
 
 
-PositionMatrix::PositionMatrix(int rows, int columns) 
+PositionMatrix::PositionMatrix(int rows, int columns)
 	: positionMatrix(rows, QVector<MyGame::ImageType>(columns, MyGame::ImageType::grass)) {}
 
 // checks the ability to make at least one move in target direction
@@ -29,7 +29,7 @@ bool PositionMatrix::isValidMove(const Position& newPosition) const
 	return isMoveInMatrixBorder(newPosition) && isFreeToMove(newPosition);
 }
 
-bool PositionMatrix::isValidPosition(const Position& position) const 
+bool PositionMatrix::isValidPosition(const Position& position) const
 {
 	int row = position.getPosition().getRow();
 	int column = position.getPosition().getColumn();
@@ -70,8 +70,8 @@ bool PositionMatrix::isFreeToMove(const Position newPosition) const
 	return barrierTerrainSet.find(type) == barrierTerrainSet.end();
 }
 
-Position PositionMatrix::positionAfterMove(const Position& currentPosition, const int& moveLength, 
-										   const MoveDestination& moveTarget, const MyGame::ImageType currentImageType) const
+Position PositionMatrix::positionAfterMove(const Position& currentPosition, const int& moveLength,
+	const MoveDestination& moveTarget, const MyGame::ImageType currentImageType) const
 {
 	int currentRow = currentPosition.getPosition().getRow();
 	int currentColumn = currentPosition.getPosition().getColumn();
@@ -141,7 +141,7 @@ void PositionMatrix::changeImageTypeInMatrix(const Position& position, const MyG
 {
 	if (!isMoveInMatrixBorder(position)) {
 		qDebug() << "Position is out of range.";
-		return ;
+		return;
 	}
 
 	setImageType(position, imageType);
@@ -160,12 +160,12 @@ void PositionMatrix::setImageType(const Position& position, const MyGame::ImageT
 	}
 }
 
-int PositionMatrix::getCountRows() const 
+int PositionMatrix::getCountRows() const
 {
 	return positionMatrix.size();
 }
 
-int PositionMatrix::getCountColumns() const 
+int PositionMatrix::getCountColumns() const
 {
 	if (positionMatrix.empty()) {
 		return 0;
@@ -199,7 +199,7 @@ void PositionMatrix::generateFieldPartsRandomly()
 }
 
 void PositionMatrix::removeActorFromPosition(const Position& position) {
-	
+
 	if (isValidPosition(position)) {
 		int row = position.getPosition().getRow();
 		int column = position.getPosition().getColumn();
@@ -289,7 +289,7 @@ bool PositionMatrix::isGrass(const Position& position) const
 	return positionMatrix[row][column] == MyGame::grass;
 }
 
-void PositionMatrix::getRowAndColumn(int& row, int& column, const Position& position) 
+void PositionMatrix::getRowAndColumn(int& row, int& column, const Position& position)
 {
 	row = position.getPosition().getRow();
 	column = position.getPosition().getColumn();
