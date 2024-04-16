@@ -12,9 +12,9 @@ namespace MyGame {
 	// possible type of value in matrix
 	enum ImageType
 	{
-		grass,
 		prey,
 		predator,
+		grass,
 		forest,
 		stone,
 		zombie
