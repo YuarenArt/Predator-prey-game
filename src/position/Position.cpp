@@ -35,3 +35,46 @@ bool Position::operator!= (const Position& rhs) const
 {
     return !(*this == rhs);
 }
+
+Position Position::operator-(const Position& rhs) const
+{
+    int rowDiff = position.getRow() - rhs.position.getRow();
+    int colDiff = position.getColumn() - rhs.position.getColumn();
+    return Position(rowDiff, colDiff);
+}
+
+void Position::moveUp() {
+    position.setRow(position.getRow() - 1);
+}
+
+void Position::moveDown() {
+    position.setRow(position.getRow() + 1);
+}
+
+void Position::moveLeft() {
+    position.setColumn(position.getColumn() - 1);
+}
+
+void Position::moveRight() {
+    position.setColumn(position.getColumn() + 1);
+}
+
+void Position::moveUpLeft() {
+    position.setRow(position.getRow() - 1);
+    position.setColumn(position.getColumn() - 1);
+}
+
+void Position::moveUpRight() {
+    position.setRow(position.getRow() - 1);
+    position.setColumn(position.getColumn() + 1);
+}
+
+void Position::moveDownLeft() {
+    position.setRow(position.getRow() + 1);
+    position.setColumn(position.getColumn() - 1);
+}
+
+void Position::moveDownRight() {
+    position.setRow(position.getRow() + 1);
+    position.setColumn(position.getColumn() + 1);
+}

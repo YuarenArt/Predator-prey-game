@@ -15,6 +15,16 @@ public:
 
 	bool operator== (const Position& rhs) const;
 	bool operator!= (const Position& rhs) const;
+	Position operator-(const Position& rhs) const;
+
+	void moveUp();
+	void moveDown();
+	void moveLeft();
+	void moveRight();
+	void moveUpLeft();
+	void moveUpRight();
+	void moveDownLeft();
+	void moveDownRight();
 
 private:
 

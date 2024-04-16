@@ -8,6 +8,14 @@ void Point2D::setPoint(int row, int column)
     this->column = column;
 }
 
+void Point2D::setRow(int row) {
+    this->row = row;
+}
+
+void Point2D::setColumn(int column) {
+    this->column = column;
+}
+
 int Point2D::getRow() const
 {
     return row;
