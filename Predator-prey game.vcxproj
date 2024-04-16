@@ -83,43 +83,61 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\field\Field.cpp" />
-    <ClCompile Include="src\field\position_matrix\PositionMatrix.cpp" />
-    <ClCompile Include="src\field\actors\ActorsInterface.cpp" />
-    <ClCompile Include="src\field\field_sprite_vector\field_sprite\FieldSprite.cpp" />
-    <ClCompile Include="src\field\field_sprite_vector\FieldSpriteVector.cpp" />
+    <ClCompile Include="src\game\field\actors\A_algorithm_class\AAlgorithm.cpp" />
+    <ClCompile Include="src\game\field\actors\predator\Predator.cpp" />
+    <ClCompile Include="src\game\field\actors\prey\Prey.cpp" />
+    <ClCompile Include="src\game\field\actors\zombie\Zombie.cpp" />
+    <ClCompile Include="src\game\field\enums\enums.cpp" />
+    <ClCompile Include="src\game\field\Field.cpp" />
+    <ClCompile Include="src\game\field\game_settings\GameSettings.cpp" />
+    <ClCompile Include="src\game\field\position_matrix\PositionMatrix.cpp" />
+    <ClCompile Include="src\game\field\actors\ActorsInterface.cpp" />
+    <ClCompile Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.cpp" />
+    <ClCompile Include="src\game\field\field_sprite_vector\FieldSpriteVector.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\position\point2D\Point2D.cpp" />
     <ClCompile Include="src\position\Position.cpp" />
-    <ClCompile Include="src\PredatorPreyGame.cpp" />
-    <ClCompile Include="src\splash_screen\SplashScreen.cpp" />
+    <ClCompile Include="src\game\PredatorPreyGame.cpp" />
+    <ClCompile Include="src\widgets\settings_widget\SettingsWidget.cpp" />
+    <ClCompile Include="src\widgets\splash_screen\SplashScreen.cpp" />
+    <ClCompile Include="src\widgets\control\ControlBtns.cpp" />
     <ClCompile Include="src\widgets\menu\Menu.cpp" />
     <QtRcc Include="PredatorPreyGame.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\PredatorPreyGame.h" />
+    <QtMoc Include="src\game\PredatorPreyGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\field\Field.ui" />
-    <QtUic Include="src\field\field_sprite_vector\field_sprite\FieldSprite.ui" />
-    <QtUic Include="src\field\field_sprite_vector\FieldSpriteVector.ui" />
-    <QtUic Include="src\PredatorPreyGame.ui" />
+    <QtUic Include="src\game\field\Field.ui" />
+    <QtUic Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.ui" />
+    <QtUic Include="src\game\field\field_sprite_vector\FieldSpriteVector.ui" />
+    <QtUic Include="src\game\PredatorPreyGame.ui" />
+    <QtUic Include="src\widgets\control\ControlBtns.ui" />
     <QtUic Include="src\widgets\menu\Menu.ui" />
+    <QtUic Include="src\widgets\settings_widget\SettingsWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\styles\styles.qss" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\field\field_sprite_vector\field_sprite\FieldSprite.h" />
+    <QtMoc Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\splash_screen\SplashScreen.h" />
+    <QtMoc Include="src\widgets\splash_screen\SplashScreen.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\field\field_sprite_vector\FieldSpriteVector.h" />
-    <QtMoc Include="src\field\Field.h" />
-    <ClInclude Include="src\field\position_matrix\PositionMatrix.h" />
-    <ClInclude Include="src\field\actors\ActorsInterface.h" />
+    <QtMoc Include="src\widgets\settings_widget\SettingsWidget.h" />
+    <QtMoc Include="src\widgets\control\ControlBtns.h" />
+    <QtMoc Include="src\game\field\field_sprite_vector\FieldSpriteVector.h" />
+    <QtMoc Include="src\game\field\Field.h" />
+    <ClInclude Include="src\game\field\actors\A_algorithm_class\AAlgorithm.h" />
+    <ClInclude Include="src\game\field\actors\prey\Prey.h" />
+    <ClInclude Include="src\game\field\actors\predator\Predator.h" />
+    <ClInclude Include="src\game\field\actors\zombie\Zombie.h" />
+    <ClInclude Include="src\game\field\enums\enums.h" />
+    <ClInclude Include="src\game\field\game_settings\GameSettings.h" />
+    <ClInclude Include="src\game\field\position_matrix\PositionMatrix.h" />
+    <QtMoc Include="src\game\field\actors\ActorsInterface.h" />
     <ClInclude Include="src\position\point2D\Point2D.h" />
     <ClInclude Include="src\position\Position.h" />
     <QtMoc Include="src\widgets\menu\Menu.h" />

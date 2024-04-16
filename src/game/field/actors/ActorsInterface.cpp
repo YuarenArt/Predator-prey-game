@@ -72,6 +72,11 @@ int ActorsInterface::getMoveLength() const
 	return moveLength;
 }
 
+MoveDirection ActorsInterface::getPossibleDirection() const
+{
+	return possibleDirection;
+}
+
 void ActorsInterface::setPosition(const Position& newPosition)
 {
 	position = newPosition;
@@ -105,4 +110,12 @@ bool ActorsInterface::isValidMoveDirection(const MoveDestination& destination) c
 	}
 	return false;
 
+}
+
+int manhattanDistance(const Position& pos1, const Position& pos2) {
+
+	int dx = pos1.getPosition().getColumn() - pos2.getPosition().getColumn();
+	int dy = pos1.getPosition().getRow() - pos2.getPosition().getRow();
+
+	return abs(dx) + abs(dy);
 }

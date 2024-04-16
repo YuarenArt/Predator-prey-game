@@ -28,22 +28,31 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\PredatorPreyGame.h">
+    <QtMoc Include="src\game\PredatorPreyGame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\field\field_sprite_vector\field_sprite\FieldSprite.h">
+    <QtMoc Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\splash_screen\SplashScreen.h">
+    <QtMoc Include="src\widgets\splash_screen\SplashScreen.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\widgets\menu\Menu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\field\field_sprite_vector\FieldSpriteVector.h">
+    <QtMoc Include="src\game\field\field_sprite_vector\FieldSpriteVector.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\field\Field.h">
+    <QtMoc Include="src\game\field\Field.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\widgets\control\ControlBtns.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\game\field\actors\ActorsInterface.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\widgets\settings_widget\SettingsWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -53,16 +62,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\PredatorPreyGame.cpp">
+    <ClCompile Include="src\game\PredatorPreyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\field_sprite_vector\field_sprite\FieldSprite.cpp">
+    <ClCompile Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\splash_screen\SplashScreen.cpp">
+    <ClCompile Include="src\widgets\splash_screen\SplashScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\position\Position.cpp">
@@ -74,33 +83,63 @@
     <ClCompile Include="src\widgets\menu\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\field_sprite_vector\FieldSpriteVector.cpp">
+    <ClCompile Include="src\game\field\field_sprite_vector\FieldSpriteVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\actors\ActorsInterface.cpp">
+    <ClCompile Include="src\game\field\actors\ActorsInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\position_matrix\PositionMatrix.cpp">
+    <ClCompile Include="src\game\field\position_matrix\PositionMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\field\Field.cpp">
+    <ClCompile Include="src\game\field\Field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\control\ControlBtns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\enums\enums.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\predator\Predator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\game_settings\GameSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\prey\Prey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\zombie\Zombie.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\settings_widget\SettingsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\A_algorithm_class\AAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\PredatorPreyGame.ui">
+    <QtUic Include="src\game\PredatorPreyGame.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\field\field_sprite_vector\field_sprite\FieldSprite.ui">
+    <QtUic Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\widgets\menu\Menu.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\field\field_sprite_vector\FieldSpriteVector.ui">
+    <QtUic Include="src\game\field\field_sprite_vector\FieldSpriteVector.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\field\Field.ui">
+    <QtUic Include="src\game\field\Field.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\widgets\control\ControlBtns.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\widgets\settings_widget\SettingsWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -111,10 +150,25 @@
     <ClInclude Include="src\position\point2D\Point2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\field\actors\ActorsInterface.h">
+    <ClInclude Include="src\game\field\position_matrix\PositionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\field\position_matrix\PositionMatrix.h">
+    <ClInclude Include="src\game\field\enums\enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\game_settings\GameSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\predator\Predator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\prey\Prey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\zombie\Zombie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\A_algorithm_class\AAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,6 +15,7 @@ public:
 
 	bool isValidMove(const Position& newPosition) const;
 	bool isValidPosition(const Position& position) const;
+	bool isBarrier(const Position& position) const;
 
 	bool isPreyPosition(const Position& newPosition) const;
 	bool isZombiePosition(const Position& newPosition) const;
@@ -24,6 +25,7 @@ public:
 	void changeImageTypeInMatrix(const Position& position, const MyGame::ImageType& imageType);
 	void generateFieldPartsRandomly();
 	void removeActorFromPosition(const Position& position);
+	Position isBarrier(const Position& position, const MyGame::ImageType actorType) const;
 
 	QVector<QVector<MyGame::ImageType>> getPositionMatrix();
 	Position positionAfterMove(const Position& currentPosition, const int& moveLength,

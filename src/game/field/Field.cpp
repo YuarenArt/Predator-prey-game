@@ -32,7 +32,6 @@ void Field::createFieldSpriteVector()
 	fieldSpriteVector.fillSpriteGrid();
 }
 
-
 void Field::createActors()
 {
 	QVector<QPair<Position, MyGame::ImageType>> actorsPositions = positionMatrix.getActorsPositions();
@@ -64,8 +63,10 @@ void Field::createActors()
 	}
 }
 
-void Field::setPlayer(MyGame::ImageType playerImageType)
+void Field::setPlayer()
 {
+	MyGame::ImageType playerImageType = gameSettings.getTypeOfPlayer();
+
 	for (auto& actor : actors) {
 		if (actor->getImageType() == playerImageType) {
 			actor->setPlayble();
@@ -127,6 +128,11 @@ bool Field::playerMove(const MoveDestination& direction)
 
 			if (currentPosition == newPosition) return false;
 
+			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(currentPosition)) {
+				emit preyCaught(true);
+				break;
+			}
+
 			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
 				emit preyCaught(true);
 				break;
@@ -158,6 +164,7 @@ void Field::changeImageTypeAfterMove(ActorsInterface& actor, const Position& new
 
 	positionMatrix.changeImageTypeInMatrix(oldPosition, MyGame::grass);
 	positionMatrix.changeImageTypeInMatrix(newPosition, actor.getImageType());
+
 	fieldSpriteVector.changeImageTypeInVector(oldPosition, MyGame::grass);
 	fieldSpriteVector.changeImageTypeInVector(newPosition, actor.getImageType());
 

@@ -105,13 +105,17 @@ void PredatorPreyGame::toggleControlVisibility() {
 
 void PredatorPreyGame::startNewGame()
 {
-	createField();
+	Difficult		  difficult = ui->settingsWidget->getDifficulty();
+	MyGame::ImageType typeOfPlayer = ui->settingsWidget->getRole();
+
+	createField(difficult, typeOfPlayer);
 	showField();
 	hideMenu();
 	showControl();
+	hideSettings();
 }
 
-void PredatorPreyGame::createField()
+void PredatorPreyGame::createField(Difficult difficult, MyGame::ImageType typeOfPlayer)
 {
 
 	if (field != nullptr) {
@@ -119,7 +123,7 @@ void PredatorPreyGame::createField()
 		field = nullptr;
 	}
 
-	field = new Field(this, 10, 10, 10); 
+	field = new Field(this, 10, 10, 10, difficult, typeOfPlayer); 
 	ui->fieldLaout->addWidget(field);
 
 	connect(field, &Field::preyCaught, this, &PredatorPreyGame::endOfGame);
@@ -202,6 +206,9 @@ void PredatorPreyGame::endOfGame(bool isPreyCaught)
 	MyGame::ImageType playerType = field->getPlayerType();
 
 	ui->field->hide();
+	hideControl();
+	showMenu();
+	showSettings();
 
 	if (isPreyCaught && playerType == MyGame::prey) gameover();
 	else if (isPreyCaught && playerType == MyGame::predator) win();
@@ -212,14 +219,12 @@ void PredatorPreyGame::endOfGame(bool isPreyCaught)
 
 void PredatorPreyGame::gameover()
 {
-	hideControl();
-	showMenu();
+
 }
 
 void PredatorPreyGame::win()
 {
-	hideControl();
-	showMenu();
+
 }
 
 void PredatorPreyGame::showField()
@@ -230,5 +235,15 @@ void PredatorPreyGame::showField()
 void PredatorPreyGame::hideField()
 {
 	ui->field->hide();
+}
+
+void PredatorPreyGame::hideSettings()
+{
+	ui->settingsWidget->hide();
+}
+
+void PredatorPreyGame::showSettings()
+{
+	ui->settingsWidget->show();
 }
 

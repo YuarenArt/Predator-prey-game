@@ -46,7 +46,7 @@ private:
 	void toggleFullscreenMode();
 	void toggleMenuVisibility();
 	void toggleControlVisibility();
-	void createField();
+	void createField(Difficult difficult = standart, MyGame::ImageType typeOfPlayer = MyGame::predator);
 	void clearField();
 
 	void startNewGame();
@@ -58,5 +58,7 @@ private:
 	void hideControl();
 	void showField();
 	void hideField();
+	void hideSettings();
+	void showSettings();
 
 };

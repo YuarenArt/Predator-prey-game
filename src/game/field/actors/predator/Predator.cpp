@@ -11,6 +11,32 @@ Predator::Predator(const Position& position, bool isPlayer) :
 
 Position Predator::autoMoveHard(PositionMatrix& positionMatrix)
 {
-	
-	return Position();
+    Position preyPosition = positionMatrix.findNearestActor(getPosition(), MyGame::prey);
+    Position predatorPostion = getPosition();
+
+    MoveDestination bestMove = getBestMove(predatorPostion, positionMatrix, preyPosition);
+    Position newPredatorPosition = positionMatrix.positionAfterMove(predatorPostion, getMoveLength(), bestMove, getImageType());
+    
+    return newPredatorPosition;
 }
+
+MoveDestination Predator::getBestMove(const Position& currentPosition, const PositionMatrix& positionMatrix, const Position& preyPosition)
+{
+    int minDistance = INT_MAX;
+    MoveDestination bestMove = MoveDestination::Up;
+
+    QSet<MoveDestination> possibleMoves = getMoveDestinationsByDirection(getPossibleDirection());
+
+    for (const auto& move : possibleMoves) {
+        Position newPos = positionMatrix.positionAfterMove(currentPosition, getMoveLength(), move, getImageType());
+        int distance = manhattanDistance(newPos, preyPosition);
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            bestMove = move;
+        }
+    }
+
+    return bestMove;
+}
+

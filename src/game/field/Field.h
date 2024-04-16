@@ -50,7 +50,7 @@ private:
 
 	void createFieldSpriteVector();
 	void createActors();
-	void setPlayer(MyGame::ImageType playerImageType = MyGame::predator);
+	void setPlayer();
 	void removeActor(const Position& position, MyGame::ImageType type);
 
 	void nextTurn();

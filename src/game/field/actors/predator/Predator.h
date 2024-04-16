@@ -12,5 +12,5 @@ public:
 	~Predator() override = default;
 
 	Position autoMoveHard (PositionMatrix& positionMatrix) override;
-
+	MoveDestination getBestMove(const Position& currentPosition, const PositionMatrix& positionMatrix, const Position& preyPosition);
 };

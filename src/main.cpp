@@ -3,7 +3,8 @@
 #include <QFile>
 #include <QPixmapCache>
 
-#include "PredatorPreyGame.h"
+#include "game/PredatorPreyGame.h"
+#include "widgets/settings_widget/SettingsWidget.h"
 
 int main(int argc, char* argv[])
 {

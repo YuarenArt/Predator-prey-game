@@ -6,6 +6,7 @@
 #include "../../../position/Position.h"
 #include "../position_matrix/PositionMatrix.h"
 #include "../enums/enums.h"
+#include "A_algorithm_class/AAlgorithm.h"
 
 class ActorsInterface: public QObject
 {
@@ -29,6 +30,7 @@ public:
 	virtual Position          getPosition() const;
 	virtual MyGame::ImageType getImageType() const;
 	virtual int				  getMoveLength() const;
+	virtual MoveDirection	  getPossibleDirection() const;
 
 	virtual void setPosition(const Position& newPosition);
 	virtual void setImageType(const MyGame::ImageType& newImageType);
@@ -47,4 +49,6 @@ private:
 	const int		  moveLength;
 
 };
+
+int manhattanDistance(const Position& pos1, const Position& pos2);
 

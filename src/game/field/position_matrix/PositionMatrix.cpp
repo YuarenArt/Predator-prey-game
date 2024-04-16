@@ -36,6 +36,15 @@ bool PositionMatrix::isValidPosition(const Position& position) const
 	return (row >= 0 && row < getCountRows() && column >= 0 && column < getCountColumns());
 }
 
+bool PositionMatrix::isBarrier(const Position& position) const
+{
+	int row = position.getPosition().getRow();
+	int column = position.getPosition().getColumn();
+
+	MyGame::ImageType type = positionMatrix[row][column];
+	return barrierTerrainSet.find(type) != barrierTerrainSet.end();
+}
+
 
 // checks that move does not go beyond the boundaries of the matrix
 bool PositionMatrix::isMoveInMatrixBorder(const Position newPosition) const
@@ -197,6 +206,25 @@ void PositionMatrix::removeActorFromPosition(const Position& position) {
 		positionMatrix[row][column] = MyGame::grass;
 	}
 
+}
+
+Position PositionMatrix::findNearestActor(const Position& position, const MyGame::ImageType actorType) const {
+	int minDistance = INT_MAX;
+	Position nearestActorPosition;
+
+	for (int row = 0; row < getCountRows(); ++row) {
+		for (int column = 0; column < getCountColumns(); ++column) {
+			if (positionMatrix[row][column] == actorType) {
+				int distance = std::abs(row - position.getPosition().getRow()) + std::abs(column - position.getPosition().getColumn());
+				if (distance < minDistance) {
+					minDistance = distance;
+					nearestActorPosition = Position(row, column);
+				}
+			}
+		}
+	}
+
+	return nearestActorPosition;
 }
 
 void PositionMatrix::generateObject(MyGame::ImageType objectType, int count)
