@@ -7,6 +7,7 @@
 #include "../widgets/control/ControlBtns.h";
 #include "../widgets/splash_screen/SplashScreen.h"
 #include "../widgets/menu/Menu.h"
+#include "../widgets/endOfGameWidget/endOfGameWidget.h"
 #include "./field/enums/enums.h"
 
 PredatorPreyGame::PredatorPreyGame(QWidget *parent)
@@ -105,18 +106,17 @@ void PredatorPreyGame::toggleControlVisibility() {
 
 void PredatorPreyGame::startNewGame()
 {
-	Difficult		  difficult = ui->settingsWidget->getDifficulty();
-	MyGame::ImageType typeOfPlayer = ui->settingsWidget->getRole();
-
-	createField(difficult, typeOfPlayer);
+	createField();
 	showField();
 	hideMenu();
 	showControl();
 	hideSettings();
 }
 
-void PredatorPreyGame::createField(Difficult difficult, MyGame::ImageType typeOfPlayer)
+void PredatorPreyGame::createField()
 {
+	Difficult		  difficult = ui->settingsWidget->getDifficulty();
+	MyGame::ImageType typeOfPlayer = ui->settingsWidget->getRole();
 
 	if (field != nullptr) {
 		delete field;
@@ -139,6 +139,12 @@ void PredatorPreyGame::showSplashScreen()
 {
 	SplashScreen* splashScreen = new SplashScreen;
 	splashScreen->showFullScreen();
+}
+
+void PredatorPreyGame::showEndOfGameWidget(bool isWin)
+{
+	EndOfGameWidget* endOfGameWidget = new EndOfGameWidget(this, isWin, field->getPlayerType());
+	endOfGameWidget->show();
 }
 
 void PredatorPreyGame::showMenu()
@@ -219,12 +225,12 @@ void PredatorPreyGame::endOfGame(bool isPreyCaught)
 
 void PredatorPreyGame::gameover()
 {
-
+	showEndOfGameWidget(false);
 }
 
 void PredatorPreyGame::win()
 {
-
+	showEndOfGameWidget(true);
 }
 
 void PredatorPreyGame::showField()

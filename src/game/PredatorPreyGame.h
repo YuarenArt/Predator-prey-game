@@ -46,12 +46,13 @@ private:
 	void toggleFullscreenMode();
 	void toggleMenuVisibility();
 	void toggleControlVisibility();
-	void createField(Difficult difficult = standart, MyGame::ImageType typeOfPlayer = MyGame::predator);
+	void createField();
 	void clearField();
 
 	void startNewGame();
 
 	void showSplashScreen();
+	void showEndOfGameWidget(bool isWin);
 	void showMenu();
 	void hideMenu();
 	void showControl();
