@@ -27,11 +27,7 @@ EndOfGameWidget::EndOfGameWidget(QWidget* parent, bool isWin, MyGame::ImageType 
 
 	setWindowFlags(Qt::WindowStaysOnTopHint);
 	setWindowFlags(Qt::FramelessWindowHint);
-
-	QPalette palette;
-	palette.setColor(QPalette::Window, Qt::white);
-	setPalette(palette);
-	setAutoFillBackground(true);
+	setWinPallete();
 
 	moveUpCenter();
 	createLabel(isWin, typeOfPlayer);
@@ -59,4 +55,12 @@ void EndOfGameWidget::createLabel(bool isWin, MyGame::ImageType typeOfPlayer)
 	ui->label->setTextFormat(Qt::RichText);
 	ui->label->setText(message);
 
+}
+
+void EndOfGameWidget::setWinPallete()
+{
+	QPalette palette;
+	palette.setColor(QPalette::Window, Qt::white);
+	setPalette(palette);
+	setAutoFillBackground(true);
 }

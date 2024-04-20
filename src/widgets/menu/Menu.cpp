@@ -5,6 +5,7 @@ Menu::Menu(QWidget *parent)
 	, ui(new Ui::Menu())
 {
 	ui->setupUi(this);
+	ui->menuLaout->setAlignment(Qt::AlignTop);
 }
 
 Menu::~Menu()

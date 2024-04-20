@@ -24,5 +24,6 @@ private:
 
 	void moveUpCenter();
 	void createLabel(bool isWin = true, MyGame::ImageType typeOfPlayer = MyGame::predator);
+	void setWinPallete();
 
 };

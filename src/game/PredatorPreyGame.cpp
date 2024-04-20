@@ -70,7 +70,9 @@ void PredatorPreyGame::keyPressEvent(QKeyEvent* event) {
 		toggleMenuVisibility(); 
 	}
 	else if (event->key() == Qt::Key_F2) {
-		toggleControlVisibility();
+		if (field != nullptr) {
+			toggleControlVisibility();
+		}
 	}
 	else {
 		QMainWindow::keyPressEvent(event);
