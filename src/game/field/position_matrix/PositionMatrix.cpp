@@ -192,7 +192,7 @@ QVector<QVector<MyGame::ImageType>> PositionMatrix::getPositionMatrix() {
 void PositionMatrix::generateFieldPartsRandomly()
 {
 	int sizeOfField = getCountRows() * getCountColumns();
-	int countForest = sizeOfField * 0.4 * 0;
+	int countForest = sizeOfField * 0.1;
 	int countStone = sizeOfField * 0.1;
 
 	QVector<int> countOfImageTypes = { countPrey, countPredator, countForest, countStone, countZombie };
