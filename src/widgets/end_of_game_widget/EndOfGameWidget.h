@@ -14,7 +14,7 @@ class EndOfGameWidget : public QWidget
 	Q_OBJECT
 
 public:
-	EndOfGameWidget(QWidget *parent = nullptr, bool isWin = true, MyGame::ImageType typeOfPlayer = MyGame::predator);
+	EndOfGameWidget(QWidget *parent, MyGame::ImageType typeOfWinner, MyGame::ImageType typeOfPlayer);
 	~EndOfGameWidget();
 
 private:
@@ -23,7 +23,7 @@ private:
 	static QMap<MyGame::ImageType, QString> loseMessages;
 
 	void moveUpCenter();
-	void createLabel(bool isWin = true, MyGame::ImageType typeOfPlayer = MyGame::predator);
-	void setWinPallete();
+	void createLabel(MyGame::ImageType typeOfWinner, MyGame::ImageType typeOfPlayer);
+	void setWinPalette();
 
 };
