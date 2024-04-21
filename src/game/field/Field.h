@@ -30,8 +30,8 @@ public:
 	MyGame::ImageType getPlayerType();
 
 signals:
-	void preyCaught(bool); // bool isPreyCaught
-	void preyEscape(bool); // bool isPreyCaught
+	void preyCaught(MyGame::ImageType typeOfWinner);
+	void preyEscape(MyGame::ImageType typeOfWinner);
 
 
 private slots:

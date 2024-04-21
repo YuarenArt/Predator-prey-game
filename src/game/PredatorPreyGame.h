@@ -4,7 +4,7 @@
 
 #include "ui_PredatorPreyGame.h"
 #include "field/Field.h"
-
+#include "../widgets/advanced_settings_widget/AdvancedSettingsWidget.h"
 
 const QString BACKGROUNDPATH = ":/PredatorPreyGame/resources/images/background/mainBackground.jpg";
 
@@ -30,13 +30,13 @@ private slots:
 	void onPlayerMoveDownRight();
 	void onPlayerMoveUpRight();
 
-	void gameover();
-	void win();
-	void endOfGame(bool isPreyCaught);
+	void endOfGame(MyGame::ImageType typeOfWinner);
+	void showAdvancedSettings();
 
 private:
-	Ui::PredatorPreyGame* ui;
-	Field* field;
+	Ui::PredatorPreyGame   *ui;
+	Field                  *field;
+	AdvancedSettingsWidget *advancedSettingsWidget;
 
 	void setMainBackgroundImage(QString pathToFile = BACKGROUNDPATH);
 
@@ -52,7 +52,7 @@ private:
 	void startNewGame();
 
 	void showSplashScreen();
-	void showEndOfGameWidget(bool isWin);
+	void showEndOfGameWidget(MyGame::ImageType typeOfWinner);
 	void showMenu();
 	void hideMenu();
 	void showControl();

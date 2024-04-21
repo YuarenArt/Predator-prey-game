@@ -32,6 +32,8 @@ void Field::createFieldSpriteVector()
 	fieldSpriteVector.fillSpriteGrid();
 }
 
+
+// TODO сделать абстрактную фабрику
 void Field::createActors()
 {
 	QVector<QPair<Position, MyGame::ImageType>> actorsPositions = positionMatrix.getActorsPositions();
@@ -90,7 +92,7 @@ void Field::turn(const MoveDestination& directionPlayerMove) {
 	if (playerMove(directionPlayerMove)) {
 		
 		if (movesCounter > maxMoves) {
-			emit preyEscape(true);
+			emit preyEscape(MyGame::prey);
 			return ;
 		}
 
@@ -106,8 +108,18 @@ void Field::nextTurn()
 		{
 			Position newPosition = npc->move(gameSettings.getDifficult(), positionMatrix);
 
-			if (npc->getImageType() != MyGame::prey && positionMatrix.isPreyPosition(newPosition)) {
-				emit preyCaught(true);
+			if (npc->getImageType() != MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::prey)) {
+				emit preyCaught(npc->getImageType());
+				break;
+			}
+
+			if (npc->getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
+				emit preyCaught(npc->getImageType());
+				break;
+			}
+
+			if (npc->getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::zombie)) {
+				emit preyCaught(npc->getImageType());
 				break;
 			}
 
@@ -129,12 +141,12 @@ bool Field::playerMove(const MoveDestination& direction)
 			if (currentPosition == newPosition) return false;
 
 			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(currentPosition)) {
-				emit preyCaught(true);
+				emit preyCaught(player->getImageType());
 				break;
 			}
 
 			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
-				emit preyCaught(true);
+				emit preyCaught(player->getImageType());
 				break;
 			}
 
@@ -148,7 +160,7 @@ bool Field::playerMove(const MoveDestination& direction)
 			movesCounter++;
 
 			if (movesCounter > maxMoves) {
-				emit preyEscape(false);
+				emit preyEscape(MyGame::prey);
 				break;
 			}
 

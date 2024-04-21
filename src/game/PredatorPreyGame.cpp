@@ -7,7 +7,7 @@
 #include "../widgets/control/ControlBtns.h";
 #include "../widgets/splash_screen/SplashScreen.h"
 #include "../widgets/menu/Menu.h"
-#include "../widgets/endOfGameWidget/endOfGameWidget.h"
+#include "../widgets/end_of_game_widget/endOfGameWidget.h"
 #include "./field/enums/enums.h"
 
 PredatorPreyGame::PredatorPreyGame(QWidget *parent)
@@ -22,11 +22,14 @@ PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	enterFullscreenMode();
 	ui->controlWidget->setVisible(false);
 
+	advancedSettingsWidget = new AdvancedSettingsWidget;
+
 	field = nullptr;
 	ui->fieldLaout->addWidget(field);
 
 	connect(ui->menuWidget->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
 	connect(ui->menuWidget->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
+	connect(ui->menuWidget->ui->settingsBtn, &QPushButton::clicked, this, &PredatorPreyGame::showAdvancedSettings);
 	
 	connect(ui->controlWidget->ui->up, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUp);
 	connect(ui->controlWidget->ui->down, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDown);
@@ -42,7 +45,7 @@ PredatorPreyGame::~PredatorPreyGame()
 {
 	delete ui;
 	delete field;
-
+	delete advancedSettingsWidget;
 }
 
 void PredatorPreyGame::setMainBackgroundImage(QString pathToFile)
@@ -120,12 +123,13 @@ void PredatorPreyGame::createField()
 	Difficult		  difficult = ui->settingsWidget->getDifficulty();
 	MyGame::ImageType typeOfPlayer = ui->settingsWidget->getRole();
 
-	if (field != nullptr) {
-		delete field;
-		field = nullptr;
-	}
+	clearField();
+	
+	unsigned int countRows   = advancedSettingsWidget->getCountRows();
+	unsigned int countColums = advancedSettingsWidget->getCountColums();
+	unsigned int countMoves  = advancedSettingsWidget->getCountMoves();
 
-	field = new Field(this, 10, 10, 10, difficult, typeOfPlayer); 
+	field = new Field(this, countRows, countColums, countMoves, difficult, typeOfPlayer);
 	ui->fieldLaout->addWidget(field);
 
 	connect(field, &Field::preyCaught, this, &PredatorPreyGame::endOfGame);
@@ -134,7 +138,10 @@ void PredatorPreyGame::createField()
 
 void PredatorPreyGame::clearField()
 {
-	field = nullptr;
+	if (field != nullptr) {
+		delete field;
+		field = nullptr;
+	}
 }
 
 void PredatorPreyGame::showSplashScreen()
@@ -143,9 +150,9 @@ void PredatorPreyGame::showSplashScreen()
 	splashScreen->showFullScreen();
 }
 
-void PredatorPreyGame::showEndOfGameWidget(bool isWin)
+void PredatorPreyGame::showEndOfGameWidget(MyGame::ImageType typeOfWinner)
 {
-	EndOfGameWidget* endOfGameWidget = new EndOfGameWidget(this, isWin, field->getPlayerType());
+	EndOfGameWidget* endOfGameWidget = new EndOfGameWidget(this, typeOfWinner, field->getPlayerType());
 	endOfGameWidget->show();
 }
 
@@ -209,30 +216,19 @@ void PredatorPreyGame::onPlayerMoveUpRight()
 	field->turn(MoveDestination::UpRight);
 }
 
-void PredatorPreyGame::endOfGame(bool isPreyCaught)
+void PredatorPreyGame::endOfGame(MyGame::ImageType typeOfWinner)
 {
-	MyGame::ImageType playerType = field->getPlayerType();
-
-	ui->field->hide();
+	hideField();
 	hideControl();
 	showMenu();
 	showSettings();
 
-	if (isPreyCaught && playerType == MyGame::prey) gameover();
-	else if (isPreyCaught && playerType == MyGame::predator) win();
-	else if (!isPreyCaught && playerType == MyGame::prey) win();
-	else gameover();
-
+	showEndOfGameWidget(typeOfWinner);
 }
 
-void PredatorPreyGame::gameover()
+void PredatorPreyGame::showAdvancedSettings()
 {
-	showEndOfGameWidget(false);
-}
-
-void PredatorPreyGame::win()
-{
-	showEndOfGameWidget(true);
+	advancedSettingsWidget->show();
 }
 
 void PredatorPreyGame::showField()
