@@ -19,6 +19,7 @@ public:
 
 	bool isPreyPosition(const Position& newPosition) const;
 	bool isZombiePosition(const Position& newPosition) const;
+	bool isActorPosition(const Position& newPosition, const MyGame::ImageType imageType) const;
 	bool isStoppingPosition(const Position& newPosition, const MyGame::ImageType currentImageType) const;
 
 	void changeImagesTypeInMatrix(const QVector<Position>& positions, const MyGame::ImageType& imageType);

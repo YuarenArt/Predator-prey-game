@@ -118,6 +118,16 @@ bool PositionMatrix::isZombiePosition(const Position& newPosition) const
 	return isZombiePosition;
 }
 
+bool PositionMatrix::isActorPosition(const Position& newPosition, const MyGame::ImageType imageType) const
+{
+	int row = newPosition.getPosition().getRow();
+	int column = newPosition.getPosition().getColumn();
+
+	bool isZombiePosition = positionMatrix[row][column] == imageType;
+
+	return isZombiePosition;
+}
+
 // cheks that the new position on of the stoping: prey, predator, zombie
 bool PositionMatrix::isStoppingPosition(const Position& newPosition, const MyGame::ImageType currentImageType) const
 {
@@ -178,6 +188,7 @@ QVector<QVector<MyGame::ImageType>> PositionMatrix::getPositionMatrix() {
 }
 
 // generates random objects in matrix due to its count
+// TODO исправить способ генерации, так как не удобно использовать и менять
 void PositionMatrix::generateFieldPartsRandomly()
 {
 	int sizeOfField = getCountRows() * getCountColumns();
