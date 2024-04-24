@@ -53,10 +53,11 @@ private:
 	void setPlayer();
 	void removeActor(const Position& position, MyGame::ImageType type);
 
+	void checkPreyEscape();
+	void checkPreyCaught(ActorsInterface& actor, const Position& newPosition);
+
 	void nextTurn();
 	bool playerMove(const MoveDestination& direction);
 	void changeImageTypeAfterMove(ActorsInterface& actor, const Position& newPosition);
-
-	bool isEndOfgame();
 
 };

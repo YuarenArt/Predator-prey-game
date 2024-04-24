@@ -42,20 +42,21 @@ void Field::createActors()
 	{
 		const Position&		     position = actorPosition.first;
 		const MyGame::ImageType& imageType = actorPosition.second;
+		Difficult difficult = gameSettings.getDifficult();
 
 		if (imageType == MyGame::predator)
 		{
-			Predator* predator = new Predator(position);
+			Predator* predator = new Predator(position, difficult);
 			actors.append(predator);
 		}
 		else if (imageType == MyGame::prey)
 		{
-			Prey* prey = new Prey(position);
+			Prey* prey = new Prey(position, difficult);
 			actors.append(prey);
 		}
 		else if (imageType == MyGame::zombie)
 		{
-			Zombie* zombie = new Zombie(position);
+			Zombie* zombie = new Zombie(position, difficult);
 			actors.append(zombie);
 		}
 	}
@@ -86,7 +87,6 @@ void Field::removeActor(const Position& position, MyGame::ImageType type) {
 		}
 	}
 }
-
 
 void Field::turn(const MoveDestination& directionPlayerMove) {
 	if (playerMove(directionPlayerMove)) {
@@ -136,33 +136,20 @@ bool Field::playerMove(const MoveDestination& direction)
 		if (player->isPlayer() && player->isValidMoveDirection(direction))
 		{
 			Position currentPosition = player->getPosition();
-			Position newPosition = positionMatrix.positionAfterMove(currentPosition, player->getMoveLength(), direction, player->getImageType());
+			Position newPosition = player->playerMove(direction, positionMatrix);
 
 			if (currentPosition == newPosition) return false;
 
-			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(currentPosition)) {
-				emit preyCaught(player->getImageType());
-				break;
-			}
-
-			if (player->getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
-				emit preyCaught(player->getImageType());
-				break;
-			}
+			checkPreyEscape();
+            checkPreyCaught(*player, newPosition);
 
 			if (positionMatrix.isZombiePosition(newPosition)) {
-
 				removeActor(newPosition, MyGame::ImageType::zombie);
 				positionMatrix.removeActorFromPosition(newPosition);
 			}
 
 			changeImageTypeAfterMove(*player, newPosition);
 			movesCounter++;
-
-			if (movesCounter > maxMoves) {
-				emit preyEscape(MyGame::prey);
-				break;
-			}
 
 			return true;
 		}
@@ -186,4 +173,25 @@ void Field::changeImageTypeAfterMove(ActorsInterface& actor, const Position& new
 MyGame::ImageType Field::getPlayerType()
 {
 	return gameSettings.getTypeOfPlayer();
+}
+
+void Field::checkPreyEscape() {
+	if (movesCounter > maxMoves) {
+		emit preyEscape(MyGame::prey);
+	}
+}
+
+void Field::checkPreyCaught(ActorsInterface& actor, const Position& newPosition) {
+	if (actor.getImageType() != MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::prey)) {
+		emit preyCaught(actor.getImageType());
+	}
+	else if (actor.getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
+		emit preyCaught(MyGame::prey);
+	}
+	else if (actor.getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::zombie)) {
+		emit preyCaught(MyGame::prey);
+	}
+	else if (actor.getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
+		emit preyCaught(MyGame::predator);
+	}
 }

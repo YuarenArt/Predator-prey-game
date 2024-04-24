@@ -4,19 +4,27 @@
 #include <QDateTime>
 
 ActorsInterface::ActorsInterface(const Position& position, const MyGame::ImageType& imageType,
-								 const MoveDirection& possibleDirection, const int moveLength, bool isPlayer) :
-	position(position), imageType(imageType), possibleDirection(possibleDirection), moveLength(moveLength), isPlayer_(isPlayer)
-{ }
+								 const MoveDirection& possibleDirection, const int moveLength, bool isPlayer,
+								 MoveStrategyInterface* moveStrategy, const Difficult& difficult) :
+
+	position(position), imageType(imageType), possibleDirection(possibleDirection),
+	moveLength(moveLength), isPlayer_(isPlayer), moveStrategy(moveStrategy), difficult(difficult) { }
 
 Position ActorsInterface::move(const Difficult& difficult, PositionMatrix& positionMatrix)
 {
+	Position currentPosition = getPosition();
 	Position newPosition;
 	switch (difficult) {
 	case standart:
-		newPosition = autoMoveStandart(positionMatrix);
+		newPosition = moveStrategy->moveStandart(currentPosition, positionMatrix);
+
+		if (positionMatrix.isZombiePosition(newPosition) && newPosition != getPosition()) {
+			emit removeActor(newPosition, MyGame::ImageType::zombie);
+			positionMatrix.removeActorFromPosition(newPosition);
+		}
 		break;
 	case hard:
-		newPosition = autoMoveHard(positionMatrix);
+		newPosition = moveStrategy->moveHard(currentPosition, positionMatrix);
 		break;
 	default:
 		qDebug() << "There is no such difficult";
@@ -26,35 +34,9 @@ Position ActorsInterface::move(const Difficult& difficult, PositionMatrix& posit
 	return newPosition;
 }
 
-Position ActorsInterface::autoMoveStandart(PositionMatrix& positionMatrix)
+Position ActorsInterface::playerMove(const MoveDestination& direction, PositionMatrix& positionMatrix)
 {
-	Position currentPosition = getPosition();
-	MoveDirection possibleDirection = getPossibleDirections(getImageType());
-	QSet<MoveDestination> possibleMoveDestination = getMoveDestinationsByDirection(possibleDirection);
-	Position newPosition;
-
-	if (!possibleMoveDestination.isEmpty()) {
-
-		QList<MoveDestination> possibleDirectionsList = possibleMoveDestination.values();
-
-		quint64 seed = QDateTime::currentMSecsSinceEpoch();
-		QRandomGenerator generator(seed);
-		int randomIndex = generator.bounded(0, possibleMoveDestination.size());
-		MoveDestination randomDirection = possibleDirectionsList.at(randomIndex);
-
-		newPosition = positionMatrix.positionAfterMove(currentPosition, moveLength, randomDirection, imageType);
-
-		if (positionMatrix.isZombiePosition(newPosition) && newPosition != currentPosition) {
-			emit removeActor(newPosition, MyGame::ImageType::zombie);
-			positionMatrix.removeActorFromPosition(newPosition);
-		}
-
-	}
-	else {
-		qDebug() << "Empty possible directions set";
-	}
-
-	return newPosition;
+	return positionMatrix.positionAfterMove(position, moveLength, direction, imageType);
 }
 
 Position ActorsInterface::getPosition() const
@@ -75,6 +57,11 @@ int ActorsInterface::getMoveLength() const
 MoveDirection ActorsInterface::getPossibleDirection() const
 {
 	return possibleDirection;
+}
+
+MoveStrategyInterface* ActorsInterface::getMoveStrategy() const
+{
+	return moveStrategy;
 }
 
 void ActorsInterface::setPosition(const Position& newPosition)
@@ -110,12 +97,4 @@ bool ActorsInterface::isValidMoveDirection(const MoveDestination& destination) c
 	}
 	return false;
 
-}
-
-int manhattanDistance(const Position& pos1, const Position& pos2) {
-
-	int dx = pos1.getPosition().getColumn() - pos2.getPosition().getColumn();
-	int dy = pos1.getPosition().getRow() - pos2.getPosition().getRow();
-
-	return abs(dx) + abs(dy);
 }

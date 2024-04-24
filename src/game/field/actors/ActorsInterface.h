@@ -6,7 +6,10 @@
 #include "../../../position/Position.h"
 #include "../position_matrix/PositionMatrix.h"
 #include "../enums/enums.h"
-#include "A_algorithm_class/AAlgorithm.h"
+#include "move_strategy/MoveStrategyInterface.h"
+#include "move_strategy/predator_move_strategy/PredatorMoveStrategy.h"
+#include "move_strategy/prey_move_strategy/PreyMoveStrategy.h"
+#include "move_strategy/zombie_move_strategy/ZombieMoveStrategy.h"
 
 class ActorsInterface: public QObject
 {
@@ -19,36 +22,37 @@ signals:
 public:
 
 	ActorsInterface(const Position& position, const MyGame::ImageType& imageType,
-					const MoveDirection& possibleDirection, const int moveLength, bool isPlayer);
+					const MoveDirection& possibleDirection, const int moveLength, bool isPlayer,
+					MoveStrategyInterface* moveStrategy, const Difficult& difficult);
+
 	virtual ~ActorsInterface() = default;
 
+	Position move(const Difficult& difficult, PositionMatrix& positionMatrix);
+	Position playerMove(const MoveDestination& direction, PositionMatrix& positionMatrix);
 
-	virtual Position move(const Difficult& difficult, PositionMatrix& positionMatrix);
-	virtual Position autoMoveStandart(PositionMatrix& positionMatrix);
-	virtual Position autoMoveHard(PositionMatrix& positionMatrix) = 0;
+	Position				getPosition() const;
+	MyGame::ImageType		getImageType() const;
+	int						getMoveLength() const;
+	MoveDirection			getPossibleDirection() const;
+	MoveStrategyInterface*  getMoveStrategy() const;
 
-	virtual Position          getPosition() const;
-	virtual MyGame::ImageType getImageType() const;
-	virtual int				  getMoveLength() const;
-	virtual MoveDirection	  getPossibleDirection() const;
+	void setPosition(const Position& newPosition);
+	void setImageType(const MyGame::ImageType& newImageType);
+	void setPossibleDirection(const MoveDirection& newPossibleDirection);
+	void setPlayble();
 
-	virtual void setPosition(const Position& newPosition);
-	virtual void setImageType(const MyGame::ImageType& newImageType);
-	virtual void setPossibleDirection(const MoveDirection& newPossibleDirection);
-	virtual void setPlayble();
+	bool isPlayer() const;
+	bool isValidMoveDirection(const MoveDestination& target) const;
 
-	virtual bool isPlayer() const;
-	virtual bool isValidMoveDirection(const MoveDestination& target) const;
+protected:
 
-private:
-
-	Position		  position;
-	MyGame::ImageType imageType;
-	MoveDirection	  possibleDirection;
-	bool              isPlayer_;
-	const int		  moveLength;
+	Position		       position;
+	Difficult			   difficult;
+	MyGame::ImageType      imageType;
+	MoveDirection	       possibleDirection;
+	bool                   isPlayer_;
+	const int			   moveLength;
+	MoveStrategyInterface *moveStrategy;
 
 };
-
-int manhattanDistance(const Position& pos1, const Position& pos2);
 
