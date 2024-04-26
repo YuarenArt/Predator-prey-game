@@ -51,7 +51,6 @@ PredatorPreyGame::~PredatorPreyGame()
 void PredatorPreyGame::setMainBackgroundImage(QString pathToFile)
 {
 	QPixmap bkgnd(pathToFile);
-	bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
 	QPalette palette;
 	palette.setBrush(QPalette::Window, bkgnd);
 	this->setPalette(palette);

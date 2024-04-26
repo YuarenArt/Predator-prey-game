@@ -18,7 +18,7 @@ Position ActorsInterface::move(const Difficult& difficult, PositionMatrix& posit
 	case standart:
 		newPosition = moveStrategy->moveStandart(currentPosition, positionMatrix);
 
-		if (positionMatrix.isZombiePosition(newPosition) && newPosition != getPosition()) {
+		if (positionMatrix.isActorPosition(newPosition, MyGame::zombie) && newPosition != getPosition() && imageType != MyGame::prey) {
 			emit removeActor(newPosition, MyGame::ImageType::zombie);
 			positionMatrix.removeActorFromPosition(newPosition);
 		}

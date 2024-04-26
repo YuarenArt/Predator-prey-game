@@ -17,19 +17,19 @@
    <item>
     <layout class="QGridLayout" name="spriteGrid">
      <property name="leftMargin">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="topMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="spacing">
-      <number>1</number>
+      <number>0</number>
      </property>
     </layout>
    </item>

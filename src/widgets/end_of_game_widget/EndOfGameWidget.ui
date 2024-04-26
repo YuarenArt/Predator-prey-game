@@ -28,6 +28,11 @@
     <height>500</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>endOfGameWidget</string>
   </property>
@@ -46,6 +51,11 @@
        <width>500</width>
        <height>500</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
      </property>
      <property name="text">
       <string/>

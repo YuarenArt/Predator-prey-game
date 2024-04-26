@@ -1,1 +1,116 @@
+QWidget {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
 
+QMainWindow {
+}
+
+QPushButton {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the buttons */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: rgb(50, 80, 70);
+}
+
+QPushButton:pressed {
+    background-color: rgb(30, 60, 50);
+}
+
+QLabel {
+    color: white;
+    background-color: rgb(60, 90, 80); /* A bit lighter swampy blue to stand out */
+    border: 2px solid rgb(70, 100, 90);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QLineEdit {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the input fields */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QLineEdit:focus {
+    border: 2px solid rgb(80, 110, 100);
+}
+
+QCheckBox {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the checkboxes */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QCheckBox:checked {
+    background-color: rgb(50, 80, 70);
+}
+
+QComboBox {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the comboboxes */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QComboBox:focus {
+    border: 2px solid rgb(80, 110, 100);
+}
+
+QSlider {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the sliders */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QSlider:hover {
+    background-color: rgb(50, 80, 70);
+}
+
+QSlider:pressed {
+    background-color: rgb(30, 60, 50);
+}
+
+QSpinBox {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the spinboxes */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QSpinBox:focus {
+    border: 2px solid rgb(80, 110, 100);
+}
+
+QRadioButton {
+    color: white;
+    background-color: rgb(40, 70, 60); /* Swampy blue color for the radio buttons */
+    border: 2px solid rgb(50, 80, 70);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QRadioButton:checked {
+    background-color: rgb(50, 80, 70);
+}
+
+AdvancedSettingsWidget {
+    color: white;
+    background-color: rgb(60, 80, 70);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid rgb(70, 70, 70);
+}

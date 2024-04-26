@@ -56,7 +56,7 @@ void  FieldSprite::addToImageCache(MyGame::ImageType imageType) {
 void FieldSprite::setImageWithWindowSize()
 {
     QPixmap cachedImage = imageCache.value(imageType);
-    cachedImage = cachedImage.scaled(this->size(), Qt::IgnoreAspectRatio);
+    cachedImage = cachedImage.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     QPalette palette;
     palette.setBrush(QPalette::Window, cachedImage);

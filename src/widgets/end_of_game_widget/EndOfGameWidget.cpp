@@ -37,7 +37,6 @@ EndOfGameWidget::EndOfGameWidget(QWidget* parent, MyGame::ImageType typeOfWinner
 {
     ui->setupUi(this);
     ui->label->setWordWrap(true);
-    ui->label->setStyleSheet("p { margin-bottom: 5px; }");
 
     setWindowFlags(Qt::WindowStaysOnTopHint);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -82,7 +81,7 @@ void EndOfGameWidget::createLabel(MyGame::ImageType typeOfWinner, MyGame::ImageT
 void EndOfGameWidget::setWinPalette()
 {
     QPalette palette;
-    palette.setColor(QPalette::Window, Qt::white);
-    setPalette(palette);
-    setAutoFillBackground(true);
+    palette.setColor(QPalette::Window, QColor(60, 85, 75));
+    this->setAutoFillBackground(true);
+    this->setPalette(palette);
 }

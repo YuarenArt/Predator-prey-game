@@ -47,6 +47,7 @@ private:
 	GameSettings            gameSettings;
 	int                     movesCounter;
 	const int               maxMoves;
+	bool					isGameOver = false;
 
 	void createFieldSpriteVector();
 	void createActors();

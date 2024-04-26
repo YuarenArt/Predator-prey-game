@@ -89,37 +89,32 @@ void Field::removeActor(const Position& position, MyGame::ImageType type) {
 }
 
 void Field::turn(const MoveDestination& directionPlayerMove) {
+	if (isGameOver) {
+		return;
+	}
+
 	if (playerMove(directionPlayerMove)) {
-		
 		if (movesCounter > maxMoves) {
 			emit preyEscape(MyGame::prey);
-			return ;
+			return;
 		}
 
 		nextTurn();
 	}
 }
 
-void Field::nextTurn()
-{
-	for (auto npc : actors)
-	{
-		if (!npc->isPlayer())
-		{
+void Field::nextTurn() {
+	if (isGameOver) {
+		return;
+	}
+
+	for (auto npc : actors) {
+		if (!npc->isPlayer()) {
 			Position newPosition = npc->move(gameSettings.getDifficult(), positionMatrix);
 
-			if (npc->getImageType() != MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::prey)) {
-				emit preyCaught(npc->getImageType());
-				break;
-			}
+			checkPreyCaught(*npc, newPosition);
 
-			if (npc->getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
-				emit preyCaught(npc->getImageType());
-				break;
-			}
-
-			if (npc->getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::zombie)) {
-				emit preyCaught(npc->getImageType());
+			if (isGameOver) {
 				break;
 			}
 
@@ -143,8 +138,12 @@ bool Field::playerMove(const MoveDestination& direction)
 			checkPreyEscape();
             checkPreyCaught(*player, newPosition);
 
-			if (positionMatrix.isZombiePosition(newPosition)) {
+			if (positionMatrix.isActorPosition(newPosition, MyGame::zombie)) {
 				removeActor(newPosition, MyGame::ImageType::zombie);
+				positionMatrix.removeActorFromPosition(newPosition);
+			}
+			else if (positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
+				removeActor(newPosition, MyGame::ImageType::predator);
 				positionMatrix.removeActorFromPosition(newPosition);
 			}
 
@@ -178,20 +177,29 @@ MyGame::ImageType Field::getPlayerType()
 void Field::checkPreyEscape() {
 	if (movesCounter > maxMoves) {
 		emit preyEscape(MyGame::prey);
+		isGameOver = true;
 	}
 }
 
 void Field::checkPreyCaught(ActorsInterface& actor, const Position& newPosition) {
 	if (actor.getImageType() != MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::prey)) {
 		emit preyCaught(actor.getImageType());
+		isGameOver = true;
 	}
 	else if (actor.getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
-		emit preyCaught(MyGame::prey);
+		emit preyCaught(MyGame::predator);
+		isGameOver = true;
 	}
 	else if (actor.getImageType() == MyGame::prey && positionMatrix.isActorPosition(newPosition, MyGame::zombie)) {
-		emit preyCaught(MyGame::prey);
+		emit preyCaught(MyGame::zombie);
+		isGameOver = true;
 	}
-	else if (actor.getImageType() == MyGame::predator && positionMatrix.isPreyPosition(newPosition)) {
+	else if (actor.getImageType() == MyGame::predator && positionMatrix.isActorPosition(newPosition, MyGame::prey)) {
 		emit preyCaught(MyGame::predator);
+		isGameOver = true;
+	}
+	else if (actor.getImageType() == MyGame::zombie && positionMatrix.isActorPosition(newPosition, MyGame::predator)) {
+		emit preyCaught(MyGame::zombie);
+		isGameOver = true;
 	}
 }
