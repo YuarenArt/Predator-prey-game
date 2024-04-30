@@ -64,22 +64,59 @@ void PredatorPreyGame::enterFullscreenMode() {
 	showFullScreen();
 }
 
-void PredatorPreyGame::keyPressEvent(QKeyEvent* event) {
-	if (event->key() == Qt::Key_F11) {
-		toggleFullscreenMode();
-	}
-	else if (event->key() == Qt::Key_Escape) {
-		toggleMenuVisibility(); 
-	}
-	else if (event->key() == Qt::Key_F2) {
-		if (field != nullptr) {
-			toggleControlVisibility();
+
+void PredatorPreyGame::keyPressEvent(QKeyEvent* event)
+{
+	if (field != nullptr) {
+		switch (event->key()) {
+		case Qt::Key_F11:
+			toggleFullscreenMode();
+			break;
+		case Qt::Key_Escape:
+			toggleMenuVisibility();
+			break;
+		case Qt::Key_F2:
+			if (field != nullptr) {
+				toggleControlVisibility();
+			}
+		case Qt::Key_Up:
+		case Qt::Key_8:
+			field->turn(MoveDestination::Up);
+			break;
+		case Qt::Key_Down:
+		case Qt::Key_2:
+			field->turn(MoveDestination::Down);
+			break;
+		case Qt::Key_Left:
+		case Qt::Key_4:
+			field->turn(MoveDestination::Left);
+			break;
+		case Qt::Key_Right:
+		case Qt::Key_6:
+			field->turn(MoveDestination::Right);
+			break;
+		case Qt::Key_7:
+			field->turn(MoveDestination::UpLeft);
+			break;
+		case Qt::Key_9:
+			field->turn(MoveDestination::UpRight);
+			break;
+		case Qt::Key_1:
+			field->turn(MoveDestination::DownLeft);
+			break;
+		case Qt::Key_3:
+			field->turn(MoveDestination::DownRight);
+			break;
+		default:
+			QMainWindow::keyPressEvent(event);
+			break;
 		}
 	}
 	else {
 		QMainWindow::keyPressEvent(event);
 	}
 }
+
 
 void PredatorPreyGame::toggleFullscreenMode() {
 	if (isFullScreen()) {
