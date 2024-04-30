@@ -8,9 +8,12 @@ public:
 
 private:
     int moveCounter;
-    MoveDestination direction;
+    MoveDirection   direction;
+    MoveDestination destination;
 
-    int             getRandomZombieMoveDirection()                  const;
-    MoveDestination getOppositeDirection(MoveDestination direction) const;
-    MoveDirection   getRandomDirection()                            const;
+    MoveDirection   getRandomZombieMoveDirection()                    const;
+    MoveDestination getOppositeDestination(MoveDestination direction) const;
+    MoveDirection   getRandomDirection()                              const;
 };
+
+MoveDestination getDestinationByDirection(MoveDirection direction);

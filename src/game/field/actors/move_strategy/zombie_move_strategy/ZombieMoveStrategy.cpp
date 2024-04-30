@@ -3,37 +3,44 @@
 
 const MyGame::ImageType imageTypeOfZombi = MyGame::ImageType::zombie;
 const int moveLengthZombie = 1;
-const int maxMoveCounter = 5;
+const int maxMoveCounter = 3;
 const MoveDirection zombiePossibleMoveDirectionVertical = vertical;
 const MoveDirection zombiePossibleMoveDirectionHorizontal = horizontal;
 
-ZombieMoveStrategy::ZombieMoveStrategy() : MoveStrategyInterface(imageTypeOfZombi, moveLengthZombie), 
-                                           moveCounter(0), direction(static_cast<MoveDestination>(QRandomGenerator::global()->bounded(4))) {}
+ZombieMoveStrategy::ZombieMoveStrategy() : MoveStrategyInterface(imageTypeOfZombi, moveLengthZombie),
+moveCounter(0)
+{
+    direction = static_cast<MoveDirection>(getRandomZombieMoveDirection());
+    destination = getDestinationByDirection(direction);
+
+}
 
 Position ZombieMoveStrategy::moveHard(const Position& currentPosition, const PositionMatrix& positionMatrix) {
     if (moveCounter >= maxMoveCounter) {
         moveCounter = 0;
-        direction = getOppositeDirection(direction);
+        direction = getRandomZombieMoveDirection();
+        destination = getDestinationByDirection(direction);
     }
 
-    Position newPosition = positionMatrix.positionAfterMove(currentPosition, moveLengthZombie, direction, imageTypeOfZombi);
+    Position newPosition = positionMatrix.positionAfterMove(currentPosition, moveLengthZombie, destination, imageTypeOfZombi);
 
     if (!positionMatrix.isValidPosition(newPosition) || positionMatrix.isBarrier(newPosition)) {
-        direction = getOppositeDirection(direction);
-        newPosition = positionMatrix.positionAfterMove(currentPosition, moveLengthZombie, direction, imageTypeOfZombi);
+        destination = getOppositeDestination(destination);
+        newPosition = positionMatrix.positionAfterMove(currentPosition, moveLengthZombie, destination, imageTypeOfZombi);
     }
 
     moveCounter++;
     return newPosition;
 }
 
-int ZombieMoveStrategy::getRandomZombieMoveDirection() const {
+MoveDirection ZombieMoveStrategy::getRandomZombieMoveDirection() const {
     QSet<MoveDirection> possibleDirections = { zombiePossibleMoveDirectionVertical, zombiePossibleMoveDirectionHorizontal };
     QVector<MoveDirection> directions(possibleDirections.begin(), possibleDirections.end());
-    return directions[QRandomGenerator::global()->bounded(directions.size())];
+    MoveDirection direction = directions[QRandomGenerator::global()->bounded(directions.size())];
+    return direction;
 }
 
-MoveDestination ZombieMoveStrategy::getOppositeDirection(MoveDestination direction) const {
+MoveDestination ZombieMoveStrategy::getOppositeDestination(MoveDestination direction) const {
     switch (direction) {
     case MoveDestination::Up:
         return MoveDestination::Down;
@@ -52,4 +59,10 @@ MoveDirection ZombieMoveStrategy::getRandomDirection() const {
     QSet<MoveDirection> possibleDirections = { vertical , horizontal };
     QVector<MoveDirection> directionsVector(possibleDirections.begin(), possibleDirections.end());
     return directionsVector[QRandomGenerator::global()->bounded(directionsVector.size())];
+}
+
+MoveDestination getDestinationByDirection(MoveDirection direction) {
+    QSet<MoveDestination> destinations = getMoveDestinationsByDirection(direction);
+    QVector<MoveDestination> destinationsVector(destinations.begin(), destinations.end());
+    return destinationsVector[QRandomGenerator::global()->bounded(destinationsVector.size())];
 }
