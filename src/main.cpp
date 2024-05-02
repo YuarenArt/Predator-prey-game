@@ -10,7 +10,6 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     QPixmapCache::setCacheLimit(20480);
-    PredatorPreyGame game;
 
     QFile styleFile("./resources/styles/styles.qss");
     if (styleFile.open(QFile::ReadOnly)) {
@@ -21,6 +20,7 @@ int main(int argc, char* argv[])
         qDebug() << "Failed to open stylesheet file!";
     }
 
+    PredatorPreyGame game;
     game.show();
 
     return app.exec();

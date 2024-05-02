@@ -2,7 +2,6 @@
 
 #include <QKeyEvent>
 #include <QSizeGrip>
-#include <QThread>
 
 #include "../widgets/control/ControlBtns.h";
 #include "../widgets/splash_screen/SplashScreen.h"
@@ -14,8 +13,7 @@ PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::PredatorPreyGame())
 {
-	// Shows the splachScrenn with short timeout
-	QTimer::singleShot(0, this, &PredatorPreyGame::showSplashScreen);
+	showSplashScreen();
 
 	ui->setupUi(this);
 	setMainBackgroundImage();
@@ -63,7 +61,6 @@ void PredatorPreyGame::exitFullscreenMode() {
 void PredatorPreyGame::enterFullscreenMode() {
 	showFullScreen();
 }
-
 
 void PredatorPreyGame::keyPressEvent(QKeyEvent* event)
 {
@@ -116,7 +113,6 @@ void PredatorPreyGame::keyPressEvent(QKeyEvent* event)
 		QMainWindow::keyPressEvent(event);
 	}
 }
-
 
 void PredatorPreyGame::toggleFullscreenMode() {
 	if (isFullScreen()) {
