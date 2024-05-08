@@ -8,5 +8,6 @@
         <file>resources/images/stone/stone.jpg</file>
         <file>resources/images/background/mainBackground.jpg</file>
         <file>resources/images/background/spashScreenBackground.jpg</file>
+        <file>resources/images/zombie/zombie.jpg</file>
     </qresource>
 </RCC>

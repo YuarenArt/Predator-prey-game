@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{29C5D9F9-CFD3-42F0-BC39-38CE30AE48D6}</ProjectGuid>
+    <ProjectGuid>{9140ADFB-F325-4790-8795-28D4AE46F213}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.4.3_msvc2019_64</QtInstall>
-    <QtModules>designer;core;gui;testlib;widgets</QtModules>
+    <QtModules>core</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -58,6 +58,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>C:\Users\HP\source\repos\YuarenArt\Predator-prey-game\x64\Debug\Point2D.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -83,80 +91,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\field\actors\move_strategy\prey_move_strategy\PreyMoveStrategy.cpp" />
-    <ClCompile Include="src\game\field\actors\move_strategy\predator_move_strategy\PredatorMoveStrategy.cpp" />
-    <ClCompile Include="src\game\field\actors\move_strategy\MoveStrategyInterface.cpp" />
-    <ClCompile Include="src\game\field\actors\A_algorithm_class\AAlgorithm.cpp" />
-    <ClCompile Include="src\game\field\actors\predator\Predator.cpp" />
-    <ClCompile Include="src\game\field\actors\prey\Prey.cpp" />
-    <ClCompile Include="src\game\field\actors\zombie\Zombie.cpp" />
-    <ClCompile Include="src\game\field\enums\enums.cpp" />
-    <ClCompile Include="src\game\field\Field.cpp" />
-    <ClCompile Include="src\game\field\game_settings\GameSettings.cpp" />
-    <ClCompile Include="src\game\field\position_matrix\PositionMatrix.cpp" />
-    <ClCompile Include="src\game\field\actors\ActorsInterface.cpp" />
-    <ClCompile Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.cpp" />
-    <ClCompile Include="src\game\field\field_sprite_vector\FieldSpriteVector.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\position\point2D\Point2D.cpp" />
-    <ClCompile Include="src\position\Position.cpp" />
-    <ClCompile Include="src\game\PredatorPreyGame.cpp" />
-    <ClCompile Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.cpp" />
-    <ClCompile Include="src\widgets\end_of_game_widget\EndOfGameWidget.cpp" />
-    <ClCompile Include="src\widgets\settings_widget\SettingsWidget.cpp" />
-    <ClCompile Include="src\widgets\splash_screen\SplashScreen.cpp" />
-    <ClCompile Include="src\widgets\control\ControlBtns.cpp" />
-    <ClCompile Include="src\widgets\menu\Menu.cpp" />
-    <ClCompile Include="src\game\field\actors\move_strategy\zombie_move_strategy\ZombieMoveStrategy.cpp" />
-    <QtRcc Include="PredatorPreyGame.qrc" />
+    <None Include="Test Predator-Prey Game.pri" />
+    <None Include="Test Predator-Prey Game.pro" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\game\PredatorPreyGame.h" />
+    <ClCompile Include="..\position\Position.cpp" />
+    <ClCompile Include="tests\cph.cpp" />
+    <ClCompile Include="main_test.cpp" />
+    <ClCompile Include="tests\position\Point2D\Point2DTest.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+      <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatAngleIncludeAsExternal>
+    </ClCompile>
+    <ClCompile Include="tests\position\PositionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\game\field\Field.ui" />
-    <QtUic Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.ui" />
-    <QtUic Include="src\game\field\field_sprite_vector\FieldSpriteVector.ui" />
-    <QtUic Include="src\game\PredatorPreyGame.ui" />
-    <QtUic Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.ui" />
-    <QtUic Include="src\widgets\control\ControlBtns.ui" />
-    <QtUic Include="src\widgets\end_of_game_widget\EndOfGameWidget.ui" />
-    <QtUic Include="src\widgets\menu\Menu.ui" />
-    <QtUic Include="src\widgets\settings_widget\SettingsWidget.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Predator-prey game.pri" />
-    <None Include="Predator-prey game.pro" />
-    <None Include="resources\styles\styles.qss" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="src\game\field\field_sprite_vector\field_sprite\FieldSprite.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="src\widgets\splash_screen\SplashScreen.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\game\field\actors\move_strategy\zombie_move_strategy\ZombieMoveStrategy.h" />
-    <QtMoc Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.h" />
-    <QtMoc Include="src\widgets\end_of_game_widget\EndOfGameWidget.h" />
-    <QtMoc Include="src\widgets\settings_widget\SettingsWidget.h" />
-    <QtMoc Include="src\widgets\control\ControlBtns.h" />
-    <QtMoc Include="src\game\field\field_sprite_vector\FieldSpriteVector.h" />
-    <QtMoc Include="src\game\field\Field.h" />
-    <ClInclude Include="src\game\field\actors\move_strategy\prey_move_strategy\PreyMoveStrategy.h" />
-    <ClInclude Include="src\game\field\actors\move_strategy\predator_move_strategy\PredatorMoveStrategy.h" />
-    <ClInclude Include="src\game\field\actors\move_strategy\MoveStrategyInterface.h" />
-    <ClInclude Include="src\game\field\actors\A_algorithm_class\AAlgorithm.h" />
-    <ClInclude Include="src\game\field\actors\prey\Prey.h" />
-    <ClInclude Include="src\game\field\actors\predator\Predator.h" />
-    <ClInclude Include="src\game\field\actors\zombie\Zombie.h" />
-    <ClInclude Include="src\game\field\enums\enums.h" />
-    <ClInclude Include="src\game\field\game_settings\GameSettings.h" />
-    <ClInclude Include="src\game\field\position_matrix\PositionMatrix.h" />
-    <QtMoc Include="src\game\field\actors\ActorsInterface.h" />
-    <ClInclude Include="src\position\point2D\Point2D.h" />
-    <ClInclude Include="src\position\Position.h" />
-    <QtMoc Include="src\widgets\menu\Menu.h" />
+    <ClInclude Include="..\position\Position.h" />
+    <ClInclude Include="tests\cph.h" />
+    <QtMoc Include="tests\position\PositionTest.h" />
+    <QtMoc Include="tests\position\Point2D\Point2DTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

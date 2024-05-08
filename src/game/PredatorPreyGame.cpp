@@ -25,17 +25,17 @@ PredatorPreyGame::PredatorPreyGame(QWidget *parent)
 	field = nullptr;
 	ui->fieldLaout->addWidget(field);
 
-	connect(ui->menuWidget->ui->newGameBtn, &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
-	connect(ui->menuWidget->ui->exitBtn, &QPushButton::clicked, this, &PredatorPreyGame::close);
-	connect(ui->menuWidget->ui->settingsBtn, &QPushButton::clicked, this, &PredatorPreyGame::showAdvancedSettings);
+	connect(ui->menuWidget->ui->newGameBtn,   &QPushButton::clicked, this, &PredatorPreyGame::startNewGame);
+	connect(ui->menuWidget->ui->exitBtn,	  &QPushButton::clicked, this, &PredatorPreyGame::close);
+	connect(ui->menuWidget->ui->settingsBtn,  &QPushButton::clicked, this, &PredatorPreyGame::showAdvancedSettings);
 	
-	connect(ui->controlWidget->ui->up, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUp);
-	connect(ui->controlWidget->ui->down, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDown);
-	connect(ui->controlWidget->ui->left, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveLeft);
-	connect(ui->controlWidget->ui->right, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveRight);
-	connect(ui->controlWidget->ui->upLeft, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUpLeft);
-	connect(ui->controlWidget->ui->upRight, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUpRight);
-	connect(ui->controlWidget->ui->downLeft, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDownLeft);
+	connect(ui->controlWidget->ui->up,		  &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUp);
+	connect(ui->controlWidget->ui->down,	  &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDown);
+	connect(ui->controlWidget->ui->left,	  &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveLeft);
+	connect(ui->controlWidget->ui->right,	  &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveRight);
+	connect(ui->controlWidget->ui->upLeft,    &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUpLeft);
+	connect(ui->controlWidget->ui->upRight,   &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveUpRight);
+	connect(ui->controlWidget->ui->downLeft,  &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDownLeft);
 	connect(ui->controlWidget->ui->downRight, &QPushButton::clicked, this, &PredatorPreyGame::onPlayerMoveDownRight);
 }
 

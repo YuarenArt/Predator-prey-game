@@ -1,10 +1,11 @@
 #include "Position.h"
 
 #include <QRandomGenerator>
+#include <QDebug>
 
 Position::Position(int row, int column)
 {
-    this->position = Point2D(row, column);
+    setPosition(row, column);
 }
 
 
@@ -14,8 +15,18 @@ Point2D Position::getPosition() const
 }
 
 
-void Position::setPosition(const int row, const int column)
+void Position::setPosition(int row, int column)
 {
+    if (row < 0) {
+        qDebug() << "Invalid row value:" << row << ". Using default value: 0.";
+        row = 0;
+    }
+
+    if (column < 0) {
+        qDebug() << "Invalid column value:" << column << ". Using default value: 0.";
+        column = 0;
+    }
+
     position.setPoint(row, column);
 }
 

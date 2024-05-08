@@ -55,11 +55,19 @@
     <QtMoc Include="src\widgets\settings_widget\SettingsWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\widgets\end_of_game_widget\EndOfGameWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\styles\styles.qss">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Predator-prey game.pri" />
+    <None Include="Predator-prey game.pro" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\PredatorPreyGame.cpp">
@@ -119,6 +127,24 @@
     <ClCompile Include="src\game\field\actors\A_algorithm_class\AAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\widgets\end_of_game_widget\EndOfGameWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\move_strategy\MoveStrategyInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\move_strategy\predator_move_strategy\PredatorMoveStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\move_strategy\prey_move_strategy\PreyMoveStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\field\actors\move_strategy\zombie_move_strategy\ZombieMoveStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\game\PredatorPreyGame.ui">
@@ -140,6 +166,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="src\widgets\settings_widget\SettingsWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\widgets\end_of_game_widget\EndOfGameWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\widgets\advanced_settings_widget\AdvancedSettingsWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -169,6 +201,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\field\actors\A_algorithm_class\AAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\move_strategy\MoveStrategyInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\move_strategy\predator_move_strategy\PredatorMoveStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\move_strategy\prey_move_strategy\PreyMoveStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\field\actors\move_strategy\zombie_move_strategy\ZombieMoveStrategy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,28 +1,53 @@
 #include "Point2D.h"
 
-Point2D::Point2D(int row, int column) : row(row), column(column) {}
+#include "QDebug"
 
-void Point2D::setPoint(int row, int column)
+Point2D::Point2D(int row, int column)
 {
-    this->row = row;
-    this->column = column;
+    setPoint(row, column);
 }
 
-void Point2D::setRow(int row) {
+Point2D::Point2D() : row(0), column(0) { }
+
+void Point2D::setPoint(int row, int column) 
+{
+    setRow(row);
+    setColumn(column);
+}
+
+void Point2D::setRow(int row)
+{
+    if (row < 0) {
+        qDebug() << "Invalid row value:" << row << ". Using default value: 0.";
+        row = 0;
+    }
     this->row = row;
 }
 
-void Point2D::setColumn(int column) {
+void Point2D::setColumn(int column)
+{
+    if (column < 0) {
+        qDebug() << "Invalid column value:" << column << ". Using default value: 0.";
+        column = 0;
+    }
     this->column = column;
 }
 
 int Point2D::getRow() const
 {
+    if (row < 0) {
+        qDebug() << "Invalid row value:" << row << ". Using default value: 0.";
+        return 0;
+    }
     return row;
 }
 
 int Point2D::getColumn() const
 {
+    if (column < 0) {
+        qDebug() << "Invalid column value:" << column << ". Using default value: 0.";
+        return 0;
+    }
     return column;
 }
 
